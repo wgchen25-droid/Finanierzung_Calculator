@@ -1,0 +1,54 @@
+name: Rebuild calculator payload
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build.mjs'
+      - 'scripts/simplify-ui.mjs'
+      - 'src/calculator.html'
+      - 'reference-data.json'
+      - '.github/workflows/rebuild-calculator.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build deterministic payload
+        run: npm run build
+
+      - name: Verify generated payload
+        run: npm run check:build
+
+      - name: Run calculation regression tests
+        run: npm test
+
+      - name: Commit generated source and payload
+        shell: bash
+        run: |
+          git add src/calculator.html assets/payload-1.js assets/payload-2.js assets/payload-3.js assets/payload-4.js assets/payload-5.js
+          if git diff --cached --quiet; then
+            echo 'No generated changes.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'build: refresh simplified calculator payload'
+          git push
