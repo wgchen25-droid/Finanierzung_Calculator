@@ -4,6 +4,7 @@ import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { gzipSync, gunzipSync } from 'node:zlib';
 import { resolve, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { applySimplifiedUi } from './simplify-ui.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const sourcePath = resolve(root, 'src/calculator.html');
@@ -55,7 +56,8 @@ async function syncedSource() {
   const fixture = JSON.parse(await readFile(fixturePath, 'utf8'));
   const canonicalFixture = JSON.stringify(fixture).replaceAll('<', '\\u003c');
   if (!referencePattern.test(html)) fail('Source is missing the reference-data script.');
-  return html.replace(referencePattern, `$1${canonicalFixture}$3`);
+  const canonical = html.replace(referencePattern, `$1${canonicalFixture}$3`);
+  return applySimplifiedUi(canonical);
 }
 
 function generatedPayloads(html) {
@@ -89,7 +91,7 @@ async function build(checkOnly) {
 
   if (checkOnly) {
     const currentSource = await readFile(sourcePath, 'utf8');
-    if (currentSource !== html) fail('src/calculator.html does not contain the canonical reference-data.json fixture. Run npm run build.');
+    if (currentSource !== html) fail('src/calculator.html is not synchronized with the canonical reference data and UI migrations. Run npm run build.');
     for (let index = 0; index < files.length; index += 1) {
       if (await readFile(files[index], 'utf8') !== generated[index]) fail(`${basename(files[index])} is stale. Run npm run build.`);
     }
