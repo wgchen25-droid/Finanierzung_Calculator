@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Finanzierung · 房贷报价比较器</title>
+  <style>
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f4f5f2;color:#192c32}
+    main{max-width:720px;margin:12vh auto;padding:28px}
+    .card{background:#fff;border:1px solid #d9e0dd;border-radius:16px;padding:24px}
+    h1{font-size:24px;margin:0 0 10px}p{color:#617179;line-height:1.6;margin:0}.error{color:#a13737;margin-top:12px}
+  </style>
+</head>
+<body>
+<main><div class="card"><h1>正在载入房贷报价比较器…</h1><p>计算器将在浏览器中本地解压并启动。</p><p id="error" class="error" hidden></p></div></main>
+<script src="assets/payload-1.js"></script>
+<script src="assets/payload-2.js"></script>
+<script src="assets/payload-3.js"></script>
+<script src="assets/payload-4.js"></script>
+<script src="assets/payload-5.js"></script>
+<script>
+(async()=>{
+  const error=document.getElementById('error');
+  try{
+    if(typeof DecompressionStream==='undefined') throw new Error('当前浏览器不支持 DecompressionStream，请使用最新版 Chrome、Edge、Firefox 或 Safari。');
+    const b64=window.__MORTGAGE_PAYLOAD||'';
+    if(!b64) throw new Error('计算器资源未载入。');
+    const raw=atob(b64);
+    const bytes=new Uint8Array(raw.length);
+    for(let i=0;i<raw.length;i++) bytes[i]=raw.charCodeAt(i);
+    const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+    const html=await new Response(stream).text();
+    document.open();
+    document.write(html);
+    document.close();
+  }catch(e){
+    error.hidden=false;
+    error.textContent='载入失败：'+(e&&e.message?e.message:String(e));
+  }
+})();
+</script>
+</body>
+</html>
