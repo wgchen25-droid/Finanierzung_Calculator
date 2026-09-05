@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "command": "node tests/reference-regression.cjs",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "darwin-arm64"
+  },
+  "assertions": 272,
+  "fixtureIntervals": 48,
+  "fixtureAmountAssertions": 192,
+  "sourceBytes": 124796,
+  "sourceSha256": "2a500534c1cf08d8e2963a7db45b5de3bcb0a80ad6403cc4ea4be834da635518",
+  "businessFormulaSha256": "52fcdac679dd7ee2040dd67fa7af3b71c71411110df79c34246d78932b5909ed",
+  "baselineCore": "9c1e0c96eea2054db662b4d1f2d0b1c54e34af9c",
+  "failures": [],
+  "limitations": [
+    "No daily-interest, staged-drawdown, commitment-fee, or bank-calendar contract behavior was added.",
+    "Long-term PDF examples after month 120 remain record-only."
+  ]
+}

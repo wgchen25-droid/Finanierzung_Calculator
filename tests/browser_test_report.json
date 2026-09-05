@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "command": "npm run test:browser",
+  "environment": {
+    "playwright": "1.63.0",
+    "browser": "152.0.7977.76",
+    "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "platform": "darwin-arm64"
+  },
+  "viewport": {
+    "width": 3840,
+    "height": 2160,
+    "deviceScaleFactor": 1
+  },
+  "checks": 91,
+  "entry": "file://index.html",
+  "exportedHtmlReopened": true,
+  "screenshot": "output/playwright/reference-3840x2160.png",
+  "remoteRequests": [],
+  "pageErrors": [],
+  "failures": [],
+  "limitations": [
+    "Browser coverage is Chromium only.",
+    "Printing and a deployed GitHub Pages response were not exercised."
+  ]
+}

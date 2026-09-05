@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="description" content="离线德国房贷报价比较器：分笔贷款、利息与剩余本金、卖房与租房、续贷压力测试。">
+<title>Finanzierung · 房贷报价比较器</title>
+<style>
+:root{--bg:#f4f5f2;--paper:#fff;--ink:#192c32;--muted:#617179;--line:#d9e0dd;--teal:#176c61;--teal-soft:#e8f3ef;--amber:#795519;--amber-soft:#fff5df;--red:#a13737;--red-soft:#fff0ee;--blue:#284e70;--s2:#128273;--s3:#ab6741;--s4:#6b598a;--s5:#3f7191;--s6:#9a687a;--s7:#6b7541;--s8:#70523e;--radius:16px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;font-size:15px;line-height:1.55}button,input,select,textarea{font:inherit}button,a,input,select,textarea{touch-action:manipulation}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}a{color:var(--teal)}button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #75ae9f;outline-offset:3px}button{min-height:42px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);padding:9px 14px;font-weight:600}button.primary{background:var(--teal);border-color:var(--teal);color:#fff}button.light{background:transparent}button.danger{color:var(--red)}button.small{font-size:13px;min-height:36px;padding:6px 11px}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(27px,3.5vw,43px);line-height:1.22;letter-spacing:-1.2px;margin-bottom:12px}h2{font-size:23px;letter-spacing:-.4px;line-height:1.4;margin-bottom:7px}h3{font-size:17px;margin-bottom:8px}p{margin-bottom:10px}.shell{max-width:1240px;margin:0 auto;padding:32px 28px 40px}.eyebrow{letter-spacing:2.3px;font-size:11px;font-weight:800;color:var(--teal);margin-bottom:17px}.masthead{display:flex;gap:20px;justify-content:space-between;align-items:flex-start}.masthead>div{min-width:0}.subtitle,.muted{color:var(--muted)}.subtitle{font-size:15px;max-width:620px;margin-bottom:0}.utility{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;max-width:420px}.private{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);width:100%;justify-content:flex-end;margin-bottom:3px}.dot{width:7px;height:7px;border-radius:50%;background:var(--teal);display:inline-block}.statusline{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:19px 0 14px;font-size:12px;color:var(--muted)}.checklabel{display:flex;align-items:center;gap:7px;cursor:pointer}.checklabel input{width:17px;height:17px;accent-color:var(--teal)}.notice{padding:15px 18px;border-radius:12px;margin:14px 0;background:var(--amber-soft);color:var(--amber);border:1px solid #e9d8b1;display:flex;align-items:center;justify-content:space-between;gap:16px}.notice strong{display:block;margin-bottom:2px}.notice p{font-size:13px;margin:0}.notice .actions{flex-shrink:0}.notice.error{background:var(--red-soft);border-color:#e9c1bb;color:var(--red)}.notice.info{background:var(--teal-soft);color:var(--teal);border-color:#c6ded5}.notice.inline{display:block;padding:12px 14px;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.tabs{display:flex;gap:8px;border-bottom:1px solid var(--line);margin:24px 0 25px;padding-bottom:12px;flex-wrap:wrap}.tabs button{background:transparent;border-color:transparent;font-size:14px;padding:10px 15px}.tabs button[aria-selected=true]{background:var(--ink);color:white}.tabs .index{opacity:.6;font-size:11px;margin-right:6px}.page[hidden]{display:none!important}.sectionhead{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:20px}.sectionhead p{color:var(--muted);font-size:13px;margin:0}.sectionhead>div{min-width:0}.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:23px;margin-bottom:20px;min-width:0}.panel.flat{background:transparent}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.five{grid-template-columns:repeat(5,minmax(0,1fr))}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{font-size:13px;font-weight:650;line-height:1.45;min-height:19px}.field label small{display:block;color:var(--muted);font-weight:400;font-size:11px;line-height:1.5;margin-top:1px}.field input,.field select,.field textarea,.control{background:#fffdf7;width:100%;color:var(--ink);border:1px solid #c9d3cd;border-radius:9px;min-height:44px;padding:9px 11px;font-variant-numeric:tabular-nums;min-width:0}.field input:disabled{background:#f1f3f1;color:#84918a}.field textarea{resize:vertical;min-height:84px;background:white}.field .hint{font-size:11px;color:var(--muted);line-height:1.5}.field.invalid input,.field.invalid select{border-color:var(--red)}.field.invalid .hint{color:var(--red)}.span2{grid-column:span 2}.spanall{grid-column:1/-1}.divider{border:0;border-top:1px solid var(--line);margin:22px 0}.summarystrip{display:flex;align-items:center;gap:24px;flex-wrap:wrap;background:#ecf0ec;border:1px solid var(--line);padding:16px 20px;border-radius:12px;margin-bottom:21px}.summarystrip .item{min-width:110px}.summarystrip small{display:block;color:var(--muted);font-size:11px;margin-bottom:2px}.summarystrip strong{font-size:19px;font-variant-numeric:tabular-nums}.summarystrip .push{margin-left:auto}.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}.chips button[aria-pressed=true]{background:var(--teal-soft);border-color:#81b8a4;color:var(--teal)}.chips input{width:80px;min-height:42px;padding:8px;border-radius:9px;border:1px solid var(--line);font-size:16px;background:white}.chips span{font-size:12px;color:var(--muted)}.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:22px}.kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}.kpi .label{font-size:12px;color:var(--muted);margin-bottom:9px}.kpi .value{font-size:clamp(24px,3vw,33px);font-weight:750;letter-spacing:-.8px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;line-height:1.25}.kpi .sub{font-size:12px;color:var(--muted);margin-top:10px}.good{color:var(--teal)}.bad{color:var(--red)}.neutral{color:var(--ink)}.badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;background:#edf1ed;border-radius:6px;padding:3px 7px;line-height:1.5;white-space:normal}.badge.benchmark{background:var(--teal-soft);color:var(--teal)}.badge.forecast{background:var(--amber-soft);color:var(--amber)}.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;max-width:100%;background:white}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:13px}th,td{padding:13px 15px;border-bottom:1px solid #e6ebe7;text-align:right;vertical-align:top}th:first-child,td:first-child{text-align:left}thead th{background:#edf1ed;font-weight:700;color:var(--ink)}thead th small{font-weight:400;display:block;margin-top:5px;color:var(--muted)}tr:last-child td,tr:last-child th{border-bottom:0}tbody th{font-weight:500;color:var(--muted);font-size:12px}.comparison th:first-child{min-width:160px;width:190px}.comparison td,.comparison thead th:not(:first-child){min-width:180px}.comparison tr.focusrow{background:#f0f7f3}.comparison td strong{font-size:16px}.comparison td small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.footnote{font-size:12px;line-height:1.7;color:var(--muted);margin-top:12px}.chartbox{background:white;border:1px solid var(--line);border-radius:16px;padding:22px;margin:22px 0 0}.chartbox svg{display:block;width:100%;height:auto;overflow:visible}.chartbox .charthead{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;margin-top:14px}.legend span{display:inline-flex;align-items:center;gap:7px}.swatch{display:inline-block;width:18px;height:3px;flex-shrink:0}.chartcontrol{display:flex;gap:14px;align-items:center;margin-top:14px;flex-wrap:wrap;font-size:12px}.chartcontrol input{flex:1;min-width:130px;accent-color:var(--teal)}.chartreadout{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;margin-top:11px}.chartreadout small{display:block;color:var(--muted);font-size:11px}.chartreadout strong{font-variant-numeric:tabular-nums}.offer-card{background:white;border:1px solid var(--line);border-radius:16px;margin-bottom:20px;overflow:hidden}.offer-head{display:flex;gap:15px;justify-content:space-between;align-items:center;padding:18px 22px;background:#edf1ed;flex-wrap:wrap}.offer-head .labelrow{display:flex;gap:10px;align-items:center;min-width:0;flex:1}.offer-head input{font-size:17px;font-weight:650;min-width:100px;width:100%;max-width:370px;border:1px solid transparent;background:transparent;padding:5px 7px;border-radius:7px}.offer-head input:focus{background:white;border-color:var(--line)}.offer-body{padding:22px}.tranche{padding:19px;border:1px solid var(--line);border-radius:12px;margin:14px 0;background:#fcfdfb}.tranche .tranchehead{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px}.tranchehead .name{display:flex;align-items:center;gap:10px;flex:1;min-width:0}.tranchehead input{width:100%;min-width:70px;max-width:400px;border:0;background:transparent;font-weight:600;padding:5px;border-radius:6px}.tranchehead .num{font-family:monospace;font-size:11px;background:var(--ink);color:#fff;border-radius:5px;padding:3px 6px}.offer-summary{font-size:13px;color:var(--muted);margin:14px 0}.offer-summary strong{color:var(--ink)}details{border-top:1px solid var(--line);margin-top:18px;padding-top:15px}summary{cursor:pointer;font-weight:600;font-size:13px;padding:4px 0;min-height:36px}details>.grid,details>p{margin-top:15px}.mini{font-size:12px;color:var(--muted)}.two-col{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:20px}.waterfall{margin:8px 0 0}.waterfall>div{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid #e6ebe7;padding:10px 0;font-size:13px}.waterfall>div:last-child{border-bottom:0;font-weight:700;padding-top:15px}.waterfall dt{color:var(--muted)}.waterfall dd{margin:0;font-variant-numeric:tabular-nums;text-align:right}.big-result{font-size:32px;letter-spacing:-.7px;font-weight:750;margin:5px 0}.formula{font-family:"SFMono-Regular",Consolas,monospace;font-size:12px;background:#f2f5f2;padding:12px 14px;border-radius:8px;overflow-wrap:anywhere;line-height:1.9}.help-content p{font-size:13px;line-height:1.9;margin:9px 0}.help-content h3{margin-top:22px}.help-content a{overflow-wrap:anywhere}.empty{padding:38px 20px;text-align:center;color:var(--muted);border:1px dashed #c9d3cd;border-radius:12px;background:white}.tablewrap .empty{border:0}.row-label small{display:block;font-size:11px;color:var(--muted)}.hidden{display:none!important}footer{border-top:1px solid var(--line);font-size:11px;color:var(--muted);padding-top:20px;margin-top:30px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.toast{background:var(--ink);color:white;padding:12px 16px;border-radius:10px;font-size:13px;margin:14px 0}.print-only{display:none}.no-wrap{white-space:nowrap}
+@media (hover:hover){button:not(:disabled):hover{filter:brightness(.96)}.tabs button:not([aria-selected=true]):hover{background:#e7ece7}tbody tr:hover{background:#f8faf7}}
+@media(max-width:1000px){.grid,.grid.five{grid-template-columns:repeat(3,minmax(0,1fr))}.masthead{flex-direction:column}.utility{max-width:none;justify-content:flex-start}.private{justify-content:flex-start;width:auto;margin-right:8px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.two-col{grid-template-columns:1fr}.kpi .value{font-size:26px}}
+@media(max-width:680px){.shell{padding:23px 16px 30px}.grid,.grid.three,.grid.five{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.kpis{grid-template-columns:1fr;gap:10px}.kpi{padding:16px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:0 12px}.kpi .label{margin:0}.kpi .value{font-size:25px;grid-column:2;grid-row:1/3}.kpi .sub{grid-column:1;font-size:11px;margin-top:5px}.sectionhead{flex-direction:column;gap:12px}.notice{align-items:flex-start;flex-direction:column;gap:12px}.notice .actions{flex-shrink:1}.panel,.chartbox{padding:17px}.tabs{gap:3px;margin-top:20px}.tabs button{padding:9px 11px;font-size:13px}.tabs .index{display:none}.field input,.field select,.field textarea{font-size:16px}.summarystrip{gap:13px;padding:14px}.summarystrip .item{min-width:85px}.summarystrip strong{font-size:17px}.summarystrip .push{margin-left:0}.offer-head,.offer-body{padding:16px}.tranche{padding:14px}.offer-head .labelrow{flex-basis:100%}.offer-head input{font-size:16px}.tranchehead{align-items:flex-start!important}.tranchehead input{font-size:15px}.chartbox svg text{font-size:13px}.statusline{font-size:11px}.utility button{font-size:12px;padding:8px 10px}.comparison th:first-child{min-width:125px;width:125px}.comparison td,.comparison thead th:not(:first-child){min-width:165px}th,td{padding:11px 12px}.chartcontrol{gap:9px}.big-result{font-size:29px}.grid.two{grid-template-columns:1fr}}
+@media(max-width:370px){.shell{padding:20px 12px}.grid,.grid.three,.grid.five{grid-template-columns:1fr}.span2{grid-column:auto}.kpi{display:block}.kpi .label{margin-bottom:6px}.kpi .sub{margin-top:6px}.tabs button{padding:8px}.utility{gap:6px}}
+@media print{body{background:white;font-size:10pt}.shell{max-width:none;padding:0}.no-print,.utility,.tabs,.statusline,.chips,.offer-card button,.chartcontrol,.toast,footer button{display:none!important}.page[hidden]{display:block!important}.page{break-before:page}.page#page-compare{break-before:auto}.page#page-inputs{display:none!important}.page#page-help{break-before:page}.panel,.chartbox,.kpi{break-inside:avoid;box-shadow:none}.print-only{display:block}.notice{padding:8px;font-size:10pt}.masthead{margin-bottom:12px}.tablewrap{overflow:visible;border-radius:0}table{font-size:9pt}th,td{padding:6px!important;min-width:0!important}.comparison th:first-child{width:135px;min-width:0}.kpis{grid-template-columns:repeat(3,1fr)}.two-col{grid-template-columns:1fr 1fr}.kpi .value{font-size:22px}.chartbox{max-width:760px}.grid,.grid.five{grid-template-columns:repeat(4,1fr)}input,select,textarea{border:0!important;padding:0!important;background:transparent!important;min-height:22px!important}.help-content{font-size:9pt}h1{font-size:24pt}h2{font-size:18pt}.offer-head{background:white}.private{display:none}}
+
+/* Reference: source values and live computation are deliberately separate. */
+#page-reference .ref-lead{max-width:900px}#page-reference .ref-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0}#page-reference .ref-card{padding:22px;border:1px solid var(--line);background:var(--paper);border-radius:var(--radius)}#page-reference .ref-card h3{margin:0 0 5px}#page-reference .ref-big{font-size:30px;font-weight:720;letter-spacing:-1px;margin:8px 0}#page-reference .ref-card p{margin:5px 0}#page-reference .ref-toolbar{display:flex;gap:14px;align-items:end;flex-wrap:wrap}#page-reference .ref-toolbar .field{flex:1;min-width:180px}#page-reference code{font-size:12px;white-space:normal;overflow-wrap:anywhere}#page-reference .ref-scroll{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:12px;margin:12px 0}#page-reference .ref-scroll table{width:100%;min-width:860px;margin:0;border:0}#page-reference th{white-space:normal}#page-reference td{vertical-align:top;white-space:normal}#page-reference .ref-money{font-variant-numeric:tabular-nums;white-space:nowrap}#page-reference .ref-tag{font-size:11px;display:inline-block;padding:2px 7px;border-radius:5px;background:var(--teal-soft);color:var(--teal)}#page-reference .ref-tag.warn{background:var(--amber-soft);color:var(--amber)}#page-reference .ref-tag.neutral{background:#edf0f3;color:var(--muted)}#page-reference .ref-note{font-size:12px;color:var(--muted);display:block;margin-top:4px}#page-reference .ref-subhead{margin-top:28px}#page-reference .ref-flag{padding:14px 18px;border-left:3px solid var(--amber);background:var(--amber-soft);border-radius:6px;margin:12px 0}#page-reference summary{cursor:pointer}#page-reference .ref-metrics td:first-child{min-width:160px}#page-reference .ref-source{font-size:12px;color:var(--muted);line-height:1.7}#reference-persistent-warning{margin-top:10px}
+@media(max-width:680px){#page-reference .ref-cards{grid-template-columns:1fr;gap:10px}#page-reference .ref-card{padding:18px}#page-reference .ref-big{font-size:27px}#page-reference .ref-toolbar{align-items:stretch}#page-reference .ref-toolbar button{width:100%}#page-reference .ref-toolbar .field{min-width:100%;width:100%}}
+@media print{#page-reference .ref-scroll{overflow:visible;border:0}#page-reference .ref-scroll table{min-width:0;font-size:8pt}#page-reference code{font-size:8pt}#page-reference .ref-card{break-inside:avoid}#page-reference .ref-cards{grid-template-columns:1fr 1fr}#page-reference details>*{display:block!important}}
+
+</style>
+</head>
+<body>
+<div class="shell" id="app">
+  <header class="masthead">
+    <div><div class="eyebrow">FINANZIERUNG / ANGEBOT COMPARE</div><h1>把报价，放在同一把尺上。</h1><p class="subtitle">比较月供，也比较利息、剩余本金与退出成本。一个文件，离线计算。</p></div>
+    <div class="utility no-print"><div class="private"><span class="dot"></span>本地运算 · 无数据上传</div><button type="button" id="export-json">导出方案 JSON</button><button type="button" id="import-json">导入方案</button><button type="button" id="export-html" class="primary">保存带数据 HTML</button><button type="button" id="print">打印</button><input type="file" accept=".json,application/json" id="file-input" class="hidden" aria-label="选择方案 JSON 文件"></div>
+  </header>
+  <div class="statusline no-print"><span id="save-status">更改仅保留在当前页面；请导出保存。</span><label class="checklabel"><input type="checkbox" id="remember">在此浏览器记住方案</label></div>
+  <div id="dataset-banner"></div><div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  <nav class="tabs no-print" role="tablist" aria-label="计算器功能"><button type="button" id="tab-compare" role="tab" aria-controls="page-compare" data-tab="compare"><span class="index">01</span>报价对比</button><button type="button" id="tab-inputs" role="tab" aria-controls="page-inputs" data-tab="inputs"><span class="index">02</span>录入参数</button><button type="button" id="tab-sale" role="tab" aria-controls="page-sale" data-tab="sale"><span class="index">03</span>卖房与租房</button><button type="button" id="tab-refi" role="tab" aria-controls="page-refi" data-tab="refi"><span class="index">04</span>续贷压力</button><button type="button" id="tab-schedule" role="tab" aria-controls="page-schedule" data-tab="schedule"><span class="index">05</span>还款明细</button><button type="button" id="tab-help" role="tab" aria-controls="page-help" data-tab="help"><span class="index">06</span>口径与说明</button><button type="button" id="tab-reference" role="tab" aria-controls="page-reference" data-tab="reference"><span class="index">07</span>Reference · 报价参照</button></nav>
+  <noscript><div class="notice error">此计算器需要浏览器启用 JavaScript；不需要联网。请在完整浏览器中打开本文件。</div></noscript>
+  <main>
+  <section id="page-compare" class="page" role="tabpanel" aria-labelledby="tab-compare">
+    <div class="sectionhead"><div><h2>同一时点，逐项比较</h2><p>第一份方案是 Benchmark。负差额代表该项金额更低，不等于整个方案一定更好。</p></div><div class="chips no-print"><button type="button" data-horizon="5">5 年</button><button type="button" data-horizon="10">10 年</button><label for="horizon" class="mini">自选</label><input id="horizon" type="number" min="1" max="40" step="0.5" value="5"><span>年</span></div></div>
+    <div id="common-strip" class="summarystrip"></div><div id="comparison-alerts"></div><div id="kpis" class="kpis"></div><div id="insight"></div><p class="footnote no-print" style="margin-bottom:8px">小屏幕可在下表内左右滑动，查看所有方案。</p><div id="comparison-table" class="tablewrap"></div>
+    <p class="footnote">融资成本 = 累计利息 + 一次性融资费用 + 已填资金预备利息。<strong>本金偿还不计为成本。</strong>此处不含卖房补偿金，也未按现金流发生时间折现；锁息期之后的结果含续贷假设。</p>
+    <div class="chartbox"><div class="charthead"><h3>剩余本金的变化 <span class="mini">Restschuld</span></h3><span class="mini">实线：首笔锁息到期前　虚线：包含续贷假设</span></div><div id="debt-chart"></div><div id="chart-legend" class="legend"></div><div class="chartcontrol no-print"><label for="chart-year">查看第 <strong id="chart-year-label">5</strong> 年</label><input type="range" id="chart-year" min="0" max="15" step="1" value="5" aria-label="选择查看剩余本金的年份"></div><div id="chart-readout" class="chartreadout"></div></div>
+  </section>
+  <section id="page-inputs" class="page" role="tabpanel" aria-labelledby="tab-inputs" hidden>
+    <div class="sectionhead"><div><h2>先统一假设，再录入报价</h2><p>浅色输入框可编辑；金额单位为 €，利率用百分数填写，例如 3.60，而非 0.036。</p></div><div class="actions no-print"><button type="button" id="new-blank">新建空白方案</button><button type="button" id="restore-demo">恢复演示</button></div></div>
+    <div class="panel"><h3>共同购房假设</h3><p class="mini">买卖同一套房时，不要为不同银行单独改变房价或自有资金。预留的应急储备不填入投入购房的自有资金。</p><div class="grid" id="project-fields"></div><div id="project-summary" class="notice info inline"></div></div>
+    <div class="panel"><h3>统一比较设置</h3><div class="grid" id="compare-fields"></div><p class="footnote">统一月供仅是“同样预算能得到什么结果”的试算，需银行另行认可。锁息结束后，按统一续贷利率和还清年限重新计算月供。每年额外还款预算在第 12、24…个月月供后执行，优先用于当期利率高的贷款，受各分笔额度上限约束；未使用预算不结转。</p></div>
+    <div id="offer-editors"></div><button type="button" class="primary no-print" id="add-offer">＋ 添加新 Angebot</button><p class="footnote">最多 8 个方案、每个方案最多 6 笔等额本息贷款。复制方案可以保留相同的贷款结构；不同分笔不要合并成一个平均利率。</p>
+  </section>
+  <section id="page-sale" class="page" role="tabpanel" aria-labelledby="tab-sale" hidden>
+    <div class="sectionhead"><div><h2>卖掉以后，究竟剩下什么？</h2><p>分别看卖房回款、累计投入，以及相对于继续租房的结果。</p></div><div class="field no-print"><label for="sale-offer">查看方案</label><select id="sale-offer" class="control"></select></div></div>
+    <div class="panel"><div class="grid" id="sale-fields"></div><details><summary>租房对照与资金机会成本</summary><div class="grid" id="rent-fields"></div><p class="footnote">租金填写与购买居住体验可比的冷租及租客独有支出，不重复计入双方相同的水电暖等费用。可退回押金不是消费，不计入启动成本；其占用资金的收益影响未建模。家具已包含在二手房价格中的，不再重复添加购房家具成本。</p></details></div>
+    <div id="sale-results"></div>
+  </section>
+  <section id="page-refi" class="page" role="tabpanel" aria-labelledby="tab-refi" hidden>
+    <div class="sectionhead"><div><h2>锁息到期时，月供承受得住吗？</h2><p>按每一笔贷款的实际到期时点计算，不把不同年份的剩余本金相加。</p></div></div>
+    <div class="panel"><div class="grid three" id="refi-fields"></div><p class="footnote">3% / 4% / 5% / 6% 都是压力情境，不是预测或银行报价。下表月供只针对该笔贷款，并以设定年限完全还清为目标。</p></div>
+    <div id="refi-results"></div>
+  </section>
+  <section id="page-schedule" class="page" role="tabpanel" aria-labelledby="tab-schedule" hidden>
+    <div class="sectionhead"><div><h2>每一笔钱，都能对上</h2><p>页面显示逐年汇总；CSV 提供完整逐月现金流。</p></div><div class="actions no-print"><label for="schedule-offer" class="mini">方案</label><select id="schedule-offer" class="control" style="width:auto;max-width:260px"></select><button type="button" id="export-csv">导出逐月 CSV</button><button type="button" id="export-summary">导出比较 CSV</button></div></div><div id="schedule-description" class="footnote"></div><div id="schedule-table" class="tablewrap"></div>
+  </section>
+  <section id="page-help" class="page help-content" role="tabpanel" aria-labelledby="tab-help" hidden>
+    <div class="sectionhead"><div><h2>计算口径与使用边界</h2><p>这是透明的情境计算器，不是银行审批、合同计息表或法律／税务意见。</p></div></div>
+    <div class="panel"><h3>从演示切换到你的实际报价</h3><p>主计算器的初始工作数据仍是演示；Reference 页另外保留 2026-09-01 融资建议的两份原始报价。查看参考不会自动替换工作数据。“新建空白方案”可清空购房与贷款核心输入。先填共同购房假设，再填基准 Angebot；按银行原文件录入各笔金额、Sollzins、锁息期和月供／初始 Tilgung。新方案可以复制基准后修改。仅当每个方案的贷款合计与共同需求一致时，才进入比较。</p><p>改动示例后仍然保持“演示”标签，直到你点击“已核对，标记为我的数据”。这个按钮只是你自己的确认，不代表第三方核验。</p>
+    <h3>保存与隐私</h3><p>所有计算由本文件中的 JavaScript 在浏览器运行；没有服务器调用、追踪器、第三方脚本或外部字体。“导出方案 JSON”保存可再次导入的数据；“保存带数据 HTML”保存计算器和当前数据的完整副本。两个文件都不加密，请自行保管。建议优先使用下载文件备份，而非依赖浏览器缓存。</p><p>“在此浏览器记住方案”使用 localStorage，默认关闭。某些浏览器会限制本地文件存储；文件移动、改名、清理缓存或换设备后可能无法读回。带数据 HTML 与浏览器缓存冲突时优先使用文件内的数据，不自动替换。页面内的“参考资料”链接仅在你点击时联网。</p>
+    <h3>月度还款模型</h3><div class="formula">基础月供 = 贷款本金 × (Sollzins + 初始 Tilgung) ÷ 12<br>当月利息 = 月初剩余本金 × Sollzins ÷ 12<br>月末剩余本金 = 月初本金 + 当月利息 − 当月月供 − 当月 Sondertilgung</div><p>公式中的利率用小数表示。程序按欧元分四舍五入，每月末先支付常规月供，再支付额外还款，最后一笔不超过未偿本金和当期利息。优先使用 Angebot 已给出的实际月供，以减少由初始还款率显示精度导致的偏差。Effektivzins 仅作为原始报价记录，不用于再算月度利息，也不声称本工具计算了法定有效年利率。</p><p>所有分笔假设在模拟起点足额放款，锁息期也从该起点计算。只付息期指锁息期内最初若干完整月仅支付利息，不偿还本金，之后使用已录入的基础月供。提款计划、按日计息、锁息起始日与放款日错位、Bauspar 组合、贴息、补贴还款及合同中复杂利率／还款跳变未建模。KfW 仅在其现金流可由此处普通分笔或只付息期表达时才适用。</p>
+    <h3>额外还款与资金预备利息</h3><p>年度额外还款额度以该分笔初始本金为基数；首次续贷后以续贷起点余额为基数，采用共同设置的续贷额度。不同合同可能按日历年、特定日期或最低金额执行，应依据合同调整。费用与 Bereitstellungszinsen 采用你手填的总金额，并统一视为起点支出；免计期和月费率只记录条款，不根据简化提款假设自动猜算，也不与已填总额重复收取。</p>
+    <h3>锁息期之后是情境，不是保证</h3><p>每笔锁息到期后，以共同设定的未来利率、完全还清年限计算新的等额月供。为让长期情境可计算，假定这个续贷利率保持到还清，且没有新的续贷费用。比较表会标注已经使用未来利率假设的结果。统一初始月供试算按各分笔初始金额比例分配总预算；该模式不支持只付息期，亦不在分笔还清后自动把空出的月供转给其他分笔。</p><div class="formula">续贷月供 A = B × r ÷ [1 − (1+r)<sup>−n</sup>]<br>B：到期余额；r：续贷年利率 ÷ 12；n：完全还清所需月数。r=0 时 A=B/n。</div>
+    <h3>“不亏”有三种口径</h3><p><strong>名义购房净结果：</strong>卖房净回款减去累计自有资金投入、融资费用、所有月供／额外还款和房主持有成本。它不计居住收益；本金既进入累计支出，也通过较低剩余债务反映在卖房回款中，不把它当作独立损失再扣一次。</p><p><strong>相对租房（不计投资收益）：</strong>名义购房净结果加上同期间避免支付的租金与租房启动成本。正值表示购买比设定的租房情境更有利。</p><p><strong>相对租房（计资金机会成本）：</strong>将购买与租房的初始现金差额、每月支出差额按输入的税后年收益率折算为卖房时点的累积值，再与卖房净回款比较。假定双方能把全部节省支出按相同、恒定收益率积累；负差额同样计入，不保证可实现该收益率。0% 时与上一口径一致。</p><div class="formula">累计购房投入 C = 投入购房的自有资金 + 融资费用 + 月供 + Sondertilgung + 持有成本<br>卖房净回款 = 卖价 × (1 − 出售费率) − 出售固定费 − 手填税费 − 补偿金 − 剩余债务<br>收回全部投入的卖价 = (C + 剩余债务 + 出售固定费 + 手填税费 + 补偿金) ÷ (1 − 出售费率)</div><p>不亏卖价假设输入的税费与补偿金不随卖价变动，持有成本是固定年度金额，不考虑通胀、税收优惠或装修残值；家具购置默认作为消费而非可回收资产。正负结果不是实际税务利润。</p>
+    <h3>提前还款不能只看“第 10 年”</h3><p>补偿金为人工输入，不按剩余本金的固定百分比估算。留空代表未确认；此时卖房输出是未计该项的暂算结果。即使输入 0，也只是你提供的假设，而不是工具作出的免赔判断。</p><p>德国 BGB §489(1) Nr.2 的一般规则涉及<strong>全部收到贷款款项满十年，再加六个月通知期</strong>；如果之后重新约定还款期限或利率，相关起算点可能改变。因此，本工具不会在第 120 个月自动认定可无补偿退出，也不会自动假定你已经及时发出通知。提前清偿与补偿金额需结合贷款合同、银行结算及适用法律核实。</p>
+    <h3>不能用此工具判断的风险</h3><p>Altlasten、Baulasten、房屋估值折扣、环境部门审批、房屋状态与银行能否放款不由现金流公式决定。相关支出可手工加入购房或持有成本；但计算结果不表示该房屋或银行已经接受这些风险。卖房税费请自行录入经确认的金额，工具不会自动判断自住豁免或所得税。</p>
+    <h3>参考资料</h3><p>模型说明与合同概念参考以下资料；计算结果来自本地代码，不抓取网站利率。核对日期：2026-09-05。</p><p><a href="https://www.interhyp.de/tilgungsrechner/" target="_blank" rel="noopener noreferrer">Interhyp · Tilgungsrechner：月供、本金、利息及锁息期</a><br><a href="https://www.drklein.de/tilgungsrechner.html" target="_blank" rel="noopener noreferrer">Dr. Klein · Tilgungsrechner：还款计划和额外还款</a><br><a href="https://www.gesetze-im-internet.de/bgb/__489.html" target="_blank" rel="noopener noreferrer">BGB §489 · Ordentliches Kündigungsrecht des Darlehensnehmers</a><br><a href="https://www.verbraucherzentrale.de/wissen/geld-versicherungen/bau-und-immobilienfinanzierung/baufinanzierung-vorzeitig-abloesen-ohne-extrakosten-aus-dem-baukredit-12773" target="_blank" rel="noopener noreferrer">Verbraucherzentrale · Baufinanzierung vorzeitig ablösen</a></p></div>
+  </section>
+
+  <section id="page-reference" class="page" role="tabpanel" aria-labelledby="tab-reference" hidden>
+    <div class="sectionhead"><div class="ref-lead"><div class="eyebrow">REFERENCE / 2026-09-01</div><h2>把银行报价，逐项对上。</h2><p>左边保留 PDF 原始数字，右边使用现有计算引擎重新计算。你的当前方案另列一栏，输入不同与计算不同分开说明。</p></div></div>
+    <div class="ref-flag"><strong>这是融资建议的参考快照，不是有效性确认。</strong>原件注明尚非有约束力的贷款要约，并要求 2026-09-03 前提交资料。本页只用于复现与录入；不表示目前仍可申请、已获批或已锁定利率。来源：PDF 第 4、11、19 页。</div>
+    <div id="reference-overview"></div>
+    <div class="panel"><h3>01 / 选择要对照的报价</h3><div class="ref-toolbar no-print"><div class="field"><label for="reference-bank">PDF 参考方案</label><select id="reference-bank" class="control"><option value="cb">Commerzbank · 第 5 页</option><option value="ing">ING · 第 12 页</option></select></div><div class="field"><label for="reference-live">主计算器中的当前方案</label><select id="reference-live" class="control"></select></div><button type="button" id="reference-load" class="primary">备份当前方案，并载入此报价</button><button type="button" id="reference-export">导出本报价的录入 JSON</button><button type="button" id="reference-undo" disabled>撤销本次载入</button></div><p class="footnote">查看和切换参考不会改动主计算器。载入会先下载当前方案备份，再替换购房参数与贷款列表；卖房、租金、持有成本及续贷参数保留当前设置，它们不是 PDF 数据。一次只载入一家，避免共同贷款需求相差 50 € 的校验冲突。浏览器可能拦截下载，请核对备份；“撤销本次载入”保留本页面会话内的一次回退，刷新后失效。</p><div id="reference-current-status" aria-live="polite"></div></div>
+    <div class="panel"><h3>02 / PDF 对应哪个输入框？</h3><p class="mini">表中的代码字段与“录入参数”页一一对应。金额输入不带千分位，例如 <code>552250</code>；利率输入 <code>3.86</code>，而非 <code>0.0386</code>。多分笔方案不以平均利率冒充一笔报价。</p><div id="reference-mapping" class="ref-scroll"></div></div>
+    <div class="panel"><h3>03 / 同一份报价，验算到分</h3><p class="mini">“原始输入重算”不读取主计算器的演示假设；只计算第 1–120 期、无额外还款。主计算器当前方案的差额只描述差异，不代表代码错误或哪家银行更好。</p><div id="reference-audit" aria-live="polite"></div><div id="reference-results" class="ref-scroll"></div></div>
+    <div class="panel"><h3>04 / 还款表逐行核对</h3><p class="mini">每家 PDF 显示 15 个逐月区间和 9 个年度／不足年度区间。这里按原表区间汇总引擎明细，而不是把“模拟第 1 年”当成“2026 年”。PDF 的负数 Saldo 表示债务；本页把余债显示为正金额。</p><details id="reference-schedule-details"><summary>展开 24 个区间：月供、利息、归还本金、期末余债</summary><div id="reference-checkpoints" class="ref-scroll"></div></details><button type="button" class="small no-print" id="reference-export-csv">导出本报价验算 CSV</button></div>
+    <div class="panel"><h3>05 / 容易混淆、不能自动当成同一件事的条款</h3><div id="reference-terms"></div></div>
+    <div class="panel"><h3>06 / 来源与实现边界</h3><p class="ref-source">来源为用户提供的 21 页融资建议 PDF，日期 2026-09-01。预算：第 3 页；Commerzbank：第 5、8–9 页；ING：第 12、15–16 页；非约束性及资料提交日期：第 4、11、19 页。下列 10 年后金额只保留为 PDF 示例，不用于验证续贷情境。</p><div id="reference-longterm"></div><p class="ref-source">代码基线：<code>wgchen25-droid/Finanierzung_Calculator</code>，提交 <code>9c1e0c96eea2054db662b4d1f2d0b1c54e34af9c</code>。本版本从五个压缩 payload 还原，在实际页面末尾新增此标签页；未改月度计息／取整公式，也未放宽贷款需求校验。用户已于 2026-09-05 明确要求将本版本推送到公开 GitHub 仓库。</p><p class="ref-source">本文件未嵌入 PDF 原件、申请人姓名、地址、联系方式、房产地址或 PIN；仍含实际报价的财务数字。本次公开提交这些去直接身份信息的报价数字已获用户明确确认；文件及导出内容未加密。</p></div>
+  </section>
+
+  </main>
+  <footer><span>FINANZIERUNG · 单文件离线比较器 v1.0 · Reference GitHub 版</span><span id="footer-data">示例不是银行承诺；所有结果均依赖输入假设。</span><span>名义金额 · EUR · 按月模拟</span></footer>
+</div>
+<script id="embedded-state" type="application/json">{"embeddedSnapshot": false, "state": {"schema": 1, "demo": true, "global": {"price": 800000, "buyPct": 10, "buyFixed": 0, "renovation": 0, "equity": 180000, "compareMode": "contract", "sameMonthly": 3300, "specialAnnual": 0, "refiRate": 4.5, "refiYears": 20, "refiSpecialPct": 5, "sellYears": 5, "sellPrice": 700000, "sellPct": 3.57, "sellFixed": 1500, "sellTax": 0, "ownerAnnual": 6000, "rentMonthly": 2400, "rentGrowth": 2, "rentStartup": 8000, "investmentReturn": 0}, "offers": [{"id": "A", "name": "当前报价 · 演示 A", "fees": 0, "commitment": 0, "penalty": null, "freeMonths": 6, "commitmentRate": 0.25, "flexibility": "待核实", "notes": "", "tranches": [{"id": "A-1", "name": "主贷款 / Annuitätendarlehen", "amount": 700000, "rate": 3.6, "effective": null, "fixedYears": 10, "basis": "tilgung", "tilgung": 2, "monthly": 3300, "specialPct": 5, "graceMonths": 0}]}, {"id": "B", "name": "候选报价 · 演示 B", "fees": 0, "commitment": 0, "penalty": null, "freeMonths": 6, "commitmentRate": 0.25, "flexibility": "待核实", "notes": "", "tranches": [{"id": "B-1", "name": "主贷款 / Annuitätendarlehen", "amount": 700000, "rate": 3.45, "effective": null, "fixedYears": 15, "basis": "tilgung", "tilgung": 2, "monthly": 3300, "specialPct": 5, "graceMonths": 0}]}], "ui": {"tab": "reference", "horizon": 5, "saleOffer": "A", "scheduleOffer": "A", "chartYear": 5}}}</script>
+<script id="reference-data" type="application/json">{"schema":"mortgage-reference-1","quoteDate":"2026-09-01","submissionDeadline":"2026-09-03","source":"用户上传的融资建议 PDF（21 页；无直接身份信息摘录）","sourceSha256":"4f64c61c5c781882bd69d144bd4c7c316803613b785743ef9a00e5ab9f74582c","repository":"wgchen25-droid/Finanierzung_Calculator","reviewedCommit":"9c1e0c96eea2054db662b4d1f2d0b1c54e34af9c","project":{"price":750000,"taxPct":6.5,"tax":48750,"notaryPct":1.8,"notary":13500,"total":812250,"buyPct":8.3,"page":3},"banks":[{"id":"cb","name":"Commerzbank","equity":260000,"principal":552250,"rate":3.86,"effective":3.95,"monthly":2696.82,"specialPct":0,"commitmentAnnual":3,"commitmentMonthly":0.25,"page":5,"schedulePage":8,"sumPage":9,"residual":417714.67,"paid":323618.4,"interest":189083.07,"repaid":134535.33,"finalDate":"2054-08-31","fullPaid":902720.98,"fullInterest":350470.98,"tilgung":2,"fixedYears":10,"freeMonths":6,"availableEquity":260000,"disbursementDate":"2026-09-30","firstPaymentDate":"2026-10-31","fixedEndDate":"2036-09-30","approxTermYears":28,"schedule":[{"date":"2026-10-31","startMonth":1,"endMonth":1,"balance":551329.58,"regular":2696.82,"interest":1776.4,"principal":920.42,"page":8},{"date":"2026-11-30","startMonth":2,"endMonth":2,"balance":550406.2,"regular":2696.82,"interest":1773.44,"principal":923.38,"page":8},{"date":"2026-12-31","startMonth":3,"endMonth":3,"balance":549479.85,"regular":2696.82,"interest":1770.47,"principal":926.35,"page":8},{"date":"2027-01-31","startMonth":4,"endMonth":4,"balance":548550.52,"regular":2696.82,"interest":1767.49,"principal":929.33,"page":8},{"date":"2027-02-28","startMonth":5,"endMonth":5,"balance":547618.2,"regular":2696.82,"interest":1764.5,"principal":932.32,"page":8},{"date":"2027-03-31","startMonth":6,"endMonth":6,"balance":546682.89,"regular":2696.82,"interest":1761.51,"principal":935.31,"page":8},{"date":"2027-04-30","startMonth":7,"endMonth":7,"balance":545744.57,"regular":2696.82,"interest":1758.5,"principal":938.32,"page":8},{"date":"2027-05-31","startMonth":8,"endMonth":8,"balance":544803.23,"regular":2696.82,"interest":1755.48,"principal":941.34,"page":8},{"date":"2027-06-30","startMonth":9,"endMonth":9,"balance":543858.86,"regular":2696.82,"interest":1752.45,"principal":944.37,"page":8},{"date":"2027-07-31","startMonth":10,"endMonth":10,"balance":542911.45,"regular":2696.82,"interest":1749.41,"principal":947.41,"page":8},{"date":"2027-08-31","startMonth":11,"endMonth":11,"balance":541961,"regular":2696.82,"interest":1746.37,"principal":950.45,"page":8},{"date":"2027-09-30","startMonth":12,"endMonth":12,"balance":541007.49,"regular":2696.82,"interest":1743.31,"principal":953.51,"page":8},{"date":"2027-10-31","startMonth":13,"endMonth":13,"balance":540050.91,"regular":2696.82,"interest":1740.24,"principal":956.58,"page":8},{"date":"2027-11-30","startMonth":14,"endMonth":14,"balance":539091.25,"regular":2696.82,"interest":1737.16,"principal":959.66,"page":8},{"date":"2027-12-31","startMonth":15,"endMonth":15,"balance":538128.51,"regular":2696.82,"interest":1734.08,"principal":962.74,"page":8},{"date":"2028-12-31","startMonth":16,"endMonth":27,"balance":526331.17,"regular":32361.84,"interest":20564.5,"principal":11797.34,"page":8},{"date":"2029-12-31","startMonth":28,"endMonth":39,"balance":514070.29,"regular":32361.84,"interest":20100.96,"principal":12260.88,"page":8},{"date":"2030-12-31","startMonth":40,"endMonth":51,"balance":501327.69,"regular":32361.84,"interest":19619.24,"principal":12742.6,"page":8},{"date":"2031-12-31","startMonth":52,"endMonth":63,"balance":488084.44,"regular":32361.84,"interest":19118.59,"principal":13243.25,"page":8},{"date":"2032-12-31","startMonth":64,"endMonth":75,"balance":474320.86,"regular":32361.84,"interest":18598.26,"principal":13763.58,"page":8},{"date":"2033-12-31","startMonth":76,"endMonth":87,"balance":460016.5,"regular":32361.84,"interest":18057.48,"principal":14304.36,"page":8},{"date":"2034-12-31","startMonth":88,"endMonth":99,"balance":445150.12,"regular":32361.84,"interest":17495.46,"principal":14866.38,"page":8},{"date":"2035-12-31","startMonth":100,"endMonth":111,"balance":429699.64,"regular":32361.84,"interest":16911.36,"principal":15450.48,"page":8},{"date":"2036-09-30","startMonth":112,"endMonth":120,"balance":417714.67,"regular":24271.38,"interest":12286.41,"principal":11984.97,"page":8}],"flexibility":"本方案额外还款栏为 0%；一般产品文本另述满一年后 6 月 30 日、最低 1,000 €，须确认具体适用条件。"},{"id":"ing","name":"ING","equity":259950,"principal":552300,"rate":3.89,"effective":3.99,"monthly":2710.87,"specialPct":5,"commitmentAnnual":2.4,"commitmentMonthly":0.2,"page":12,"schedulePage":15,"sumPage":16,"residual":417540.16,"paid":325304.4,"interest":190544.56,"repaid":134759.84,"finalDate":"2054-07-31","fullPaid":904715.37,"fullInterest":352415.37,"tilgung":2,"fixedYears":10,"freeMonths":6,"availableEquity":260000,"disbursementDate":"2026-09-30","firstPaymentDate":"2026-10-31","fixedEndDate":"2036-09-30","approxTermYears":28,"schedule":[{"date":"2026-10-31","startMonth":1,"endMonth":1,"balance":551379.5,"regular":2710.87,"interest":1790.37,"principal":920.5,"page":15},{"date":"2026-11-30","startMonth":2,"endMonth":2,"balance":550456.02,"regular":2710.87,"interest":1787.39,"principal":923.48,"page":15},{"date":"2026-12-31","startMonth":3,"endMonth":3,"balance":549529.54,"regular":2710.87,"interest":1784.39,"principal":926.48,"page":15},{"date":"2027-01-31","startMonth":4,"endMonth":4,"balance":548600.06,"regular":2710.87,"interest":1781.39,"principal":929.48,"page":15},{"date":"2027-02-28","startMonth":5,"endMonth":5,"balance":547667.57,"regular":2710.87,"interest":1778.38,"principal":932.49,"page":15},{"date":"2027-03-31","startMonth":6,"endMonth":6,"balance":546732.06,"regular":2710.87,"interest":1775.36,"principal":935.51,"page":15},{"date":"2027-04-30","startMonth":7,"endMonth":7,"balance":545793.51,"regular":2710.87,"interest":1772.32,"principal":938.55,"page":15},{"date":"2027-05-31","startMonth":8,"endMonth":8,"balance":544851.92,"regular":2710.87,"interest":1769.28,"principal":941.59,"page":15},{"date":"2027-06-30","startMonth":9,"endMonth":9,"balance":543907.28,"regular":2710.87,"interest":1766.23,"principal":944.64,"page":15},{"date":"2027-07-31","startMonth":10,"endMonth":10,"balance":542959.58,"regular":2710.87,"interest":1763.17,"principal":947.7,"page":15},{"date":"2027-08-31","startMonth":11,"endMonth":11,"balance":542008.8,"regular":2710.87,"interest":1760.09,"principal":950.78,"page":15},{"date":"2027-09-30","startMonth":12,"endMonth":12,"balance":541054.94,"regular":2710.87,"interest":1757.01,"principal":953.86,"page":15},{"date":"2027-10-31","startMonth":13,"endMonth":13,"balance":540097.99,"regular":2710.87,"interest":1753.92,"principal":956.95,"page":15},{"date":"2027-11-30","startMonth":14,"endMonth":14,"balance":539137.94,"regular":2710.87,"interest":1750.82,"principal":960.05,"page":15},{"date":"2027-12-31","startMonth":15,"endMonth":15,"balance":538174.78,"regular":2710.87,"interest":1747.71,"principal":963.16,"page":15},{"date":"2028-12-31","startMonth":16,"endMonth":27,"balance":526370.35,"regular":32530.44,"interest":20726.01,"principal":11804.43,"page":15},{"date":"2029-12-31","startMonth":28,"endMonth":39,"balance":514098.46,"regular":32530.44,"interest":20258.55,"principal":12271.89,"page":15},{"date":"2030-12-31","startMonth":40,"endMonth":51,"balance":501340.59,"regular":32530.44,"interest":19772.57,"principal":12757.87,"page":15},{"date":"2031-12-31","startMonth":52,"endMonth":63,"balance":488077.49,"regular":32530.44,"interest":19267.34,"principal":13263.1,"page":15},{"date":"2032-12-31","startMonth":64,"endMonth":75,"balance":474289.15,"regular":32530.44,"interest":18742.1,"principal":13788.34,"page":15},{"date":"2033-12-31","startMonth":76,"endMonth":87,"balance":459954.79,"regular":32530.44,"interest":18196.08,"principal":14334.36,"page":15},{"date":"2034-12-31","startMonth":88,"endMonth":99,"balance":445052.77,"regular":32530.44,"interest":17628.42,"principal":14902.02,"page":15},{"date":"2035-12-31","startMonth":100,"endMonth":111,"balance":429560.6,"regular":32530.44,"interest":17038.27,"principal":15492.17,"page":15},{"date":"2036-09-30","startMonth":112,"endMonth":120,"balance":417540.16,"regular":24397.83,"interest":12377.39,"principal":12020.44,"page":15}],"flexibility":"每个锁息期最多 2 次免费 Tilgung 调整，范围 1.25%–10%；更多调整收费未列。"}]}</script>
+<script>
+/* Pure calculation engine. EUR amounts, monthly end-of-period cash flows. */
+(function (root) {
+  'use strict';
+  const VERSION = 1;
+  const round = x => Math.round((x + Number.EPSILON) * 100) / 100;
+  const sum = (arr, key) => arr.reduce((v, a) => v + (key ? a[key] : a), 0);
+  const finite = x => typeof x === 'number' && Number.isFinite(x);
+  const clone = x => JSON.parse(JSON.stringify(x));
+  const globalRules = {
+    price:[0,50000000], buyPct:[0,30], buyFixed:[0,5000000], renovation:[0,10000000], equity:[0,60000000],
+    sameMonthly:[0,1000000], specialAnnual:[0,10000000], refiRate:[0,25], refiYears:[1,40], refiSpecialPct:[0,100],
+    sellYears:[1,40], sellPrice:[0,100000000], sellPct:[0,30], sellFixed:[0,5000000], sellTax:[0,10000000],
+    ownerAnnual:[0,1000000], rentMonthly:[0,1000000], rentGrowth:[-10,20], rentStartup:[0,5000000], investmentReturn:[-10,20]
+  };
+  const trancheRules = { amount:[0,50000000], rate:[0,25], effective:[0,40], fixedYears:[1,30], tilgung:[0,50], monthly:[0,1000000], specialPct:[0,100], graceMonths:[0,120] };
+  const offerRules = { fees:[0,5000000], commitment:[0,5000000], penalty:[0,10000000], freeMonths:[0,60], commitmentRate:[0,5] };
+  function tranche(id, amount, rate, fixedYears) {
+    return {id, name:'主贷款 / Annuitätendarlehen', amount, rate, effective:null, fixedYears, basis:'tilgung', tilgung:2, monthly:3300, specialPct:5, graceMonths:0};
+  }
+  function offer(id, name, rate, fixedYears) {
+    return {id, name, fees:0, commitment:0, penalty:null, freeMonths:6, commitmentRate:0.25, flexibility:'待核实', notes:'', tranches:[tranche(id+'-1',700000,rate,fixedYears)]};
+  }
+  function defaults() {
+    return {schema:VERSION, demo:true, global:{price:800000,buyPct:10,buyFixed:0,renovation:0,equity:180000,
+      compareMode:'contract',sameMonthly:3300,specialAnnual:0,refiRate:4.5,refiYears:20,refiSpecialPct:5,
+      sellYears:5,sellPrice:700000,sellPct:3.57,sellFixed:1500,sellTax:0,ownerAnnual:6000,
+      rentMonthly:2400,rentGrowth:2,rentStartup:8000,investmentReturn:0},
+      offers:[offer('A','当前报价 · 演示 A',3.6,10),offer('B','候选报价 · 演示 B',3.45,15)],
+      ui:{tab:'compare',horizon:5,saleOffer:'A',scheduleOffer:'A',chartYear:5}};
+  }
+  function blank() {
+    const s=defaults(); s.demo=false;
+    ['price','equity'].forEach(k=>s.global[k]=null);
+    Object.assign(s.global,{buyPct:0,buyFixed:0,renovation:0,sellPrice:0,sellPct:0,sellFixed:0,ownerAnnual:0,rentMonthly:0,rentStartup:0,rentGrowth:0});
+    s.offers=s.offers.slice(0,1); s.offers[0].name='我的基准 Angebot';
+    Object.assign(s.offers[0],{freeMonths:0,commitmentRate:0});
+    Object.assign(s.offers[0].tranches[0],{amount:null,rate:null,fixedYears:null,tilgung:null,monthly:null});
+    s.ui.tab='inputs'; return s;
+  }
+  function loanNeed(g) {
+    if (!['price','buyPct','buyFixed','renovation','equity'].every(k=>finite(g[k]))) return null;
+    return round(g.price*(1+g.buyPct/100)+g.buyFixed+g.renovation-g.equity);
+  }
+  function checkRules(obj,rules,optional=[]) {
+    return Object.keys(rules).filter(k=> !(optional.includes(k) && obj[k]===null) &&
+      (!finite(obj[k]) || obj[k]<rules[k][0] || obj[k]>rules[k][1]));
+  }
+  function basePayment(t,g,total) {
+    return round(g.compareMode==='equal' ? g.sameMonthly*t.amount/total :
+      t.basis==='monthly' ? t.monthly : t.amount*(t.rate+t.tilgung)/1200);
+  }
+  function validate(g,o) {
+    const errors=[], warnings=[];
+    const badGlobal=checkRules(g,globalRules);
+    if(badGlobal.length) errors.push('共同假设有空值或超出范围：'+badGlobal.join(', '));
+    const need=loanNeed(g);
+    if(need!==null && need<=0) errors.push('贷款需求需大于 0；此工具不模拟全现金购房。');
+    if(!o.tranches.length) errors.push('至少需要一笔贷款。');
+    const badOffer=checkRules(o,offerRules,['penalty']);
+    if(badOffer.length) errors.push('报价费用或条款参数不完整：'+badOffer.join(', '));
+    const total=sum(o.tranches,'amount');
+    if(need!==null && finite(total) && Math.abs(total-need)>1) errors.push('贷款分笔合计与共同贷款需求不一致，差额 '+round(total-need).toLocaleString('de-DE')+' €。');
+    o.tranches.forEach((t,i)=>{
+      const bad=checkRules(t,trancheRules,['effective']);
+      // Only the active repayment-input method is mandatory.
+      const inactive=t.basis==='monthly'?'tilgung':'monthly';
+      const relevant=bad.filter(k=>g.compareMode==='equal' ? !['tilgung','monthly'].includes(k) : k!==inactive);
+      if(relevant.length) errors.push('第 '+(i+1)+' 笔参数缺失或超限：'+relevant.join(', '));
+      if(t.amount===0) errors.push('第 '+(i+1)+' 笔贷款金额必须大于 0；不使用的分笔请删除。');
+      if(finite(t.graceMonths) && (!Number.isInteger(t.graceMonths) || t.graceMonths>Math.round(t.fixedYears*12))) errors.push('第 '+(i+1)+' 笔只付息期需为整数月，且不可长于锁息期。');
+      if(g.compareMode==='equal' && t.graceMonths>0) errors.push('统一月供试算不支持只付息期；请使用原报价月供，或将只付息期设为 0。');
+      const pay=basePayment(t,g,total);
+      if(finite(pay) && pay+0.005<round(t.amount*t.rate/1200)) errors.push('第 '+(i+1)+' 笔月供不足以支付利息，请提高月供或还款率。');
+      else if(finite(pay) && pay<=round(t.amount*t.rate/1200)) warnings.push('第 '+(i+1)+' 笔在常规月供下不偿还本金。');
+    });
+    if(o.penalty===null) warnings.push('提前还款补偿金未确认；卖房测算暂不计入。');
+    if(g.compareMode==='equal') warnings.push('统一初始月供为假设试算，不代表银行同意该还款安排。');
+    return {errors,warnings,valid:errors.length===0};
+  }
+  function refiPayment(principal,annualRate,years) {
+    if(principal<=0) return 0;
+    const n=Math.max(1,Math.round(years*12)), r=annualRate/1200;
+    return round(r===0 ? principal/n : principal*r/(-Math.expm1(-n*Math.log1p(r))));
+  }
+  function simulateOffer(g,o,maxMonths=480) {
+    const validation=validate(g,o);
+    if(!validation.valid) return {offer:o, ...validation};
+    maxMonths=Math.min(480,Math.max(1,Math.round(maxMonths)));
+    const total=round(sum(o.tranches,'amount'));
+    const parts=o.tranches.map(t=>({t, balance:t.amount, base:basePayment(t,g,total), rate:t.rate,
+      fixed:Math.round(t.fixedYears*12), refiPrincipal:0, refiPay:0, refiTerm:Math.round(g.refiYears*12),
+      cumulativeInterest:0,cumulativeRegular:0,cumulativeSpecial:0,
+      rows:[{month:0,balance:t.amount,interest:0,regular:0,special:0,principal:0,cumInterest:0,cumRegular:0,cumSpecial:0,projected:false}]}));
+    if(g.compareMode==='equal') {
+      const delta=round(g.sameMonthly-sum(parts,'base'));
+      parts[parts.length-1].base=round(parts[parts.length-1].base+delta);
+      if(parts.some(p=>p.base<round(p.t.amount*p.t.rate/1200))) return {offer:o,valid:false,errors:['统一月供分配并按分取整后，不足以支付某笔利息；请略微提高总月供。'],warnings:validation.warnings};
+    }
+    const fees=round(o.fees+o.commitment);
+    const rows=[{month:0,balance:total,interest:0,regular:0,special:0,principal:0,cumInterest:0,cumRegular:0,cumSpecial:0,cumPrincipal:0,cost:fees,projected:false}];
+    let cumulI=0,cumulR=0,cumulS=0, projectedEver=false;
+    for(let m=1;m<=maxMonths;m++) {
+      let monthI=0,monthR=0,monthS=0;
+      parts.forEach(p=>{
+        if(m===p.fixed+1 && p.balance>0) {
+          p.refiPrincipal=p.balance; p.rate=g.refiRate; p.refiPay=refiPayment(p.balance,g.refiRate,g.refiYears);
+        }
+        const projected=m>p.fixed && p.refiPrincipal>0;
+        projectedEver=projectedEver || projected;
+        const interest=p.balance>0 ? round(p.balance*p.rate/1200):0;
+        let scheduled=m>p.fixed?p.refiPay:(m<=p.t.graceMonths?interest:p.base);
+        // Clear cent-rounding residue with the last refinancing payment.
+        if(m>p.fixed && m-p.fixed>=p.refiTerm) scheduled=p.balance+interest;
+        const regular=round(Math.min(p.balance+interest,Math.max(0,scheduled)));
+        p.balance=round(Math.max(0,p.balance+interest-regular));
+        p.pending={month:m,interest,regular,special:0,projected};
+        monthI+=interest; monthR+=regular;
+      });
+      if(m%12===0 && g.specialAnnual>0) {
+        let budget=g.specialAnnual;
+        [...parts].sort((a,b)=>b.rate-a.rate || a.t.id.localeCompare(b.t.id)).forEach(p=>{
+          const pct=m>p.fixed?g.refiSpecialPct:p.t.specialPct;
+          const basis=m>p.fixed?p.refiPrincipal:p.t.amount;
+          const extra=round(Math.min(budget,p.balance,round(basis*pct/100)));
+          p.balance=round(p.balance-extra); budget=round(budget-extra);
+          p.pending.special=extra; monthS+=extra;
+        });
+      }
+      parts.forEach(p=>{
+        const d=p.pending;
+        p.cumulativeInterest=round(p.cumulativeInterest+d.interest);
+        p.cumulativeRegular=round(p.cumulativeRegular+d.regular);
+        p.cumulativeSpecial=round(p.cumulativeSpecial+d.special);
+        p.rows.push({...d,balance:p.balance,principal:round(d.regular-d.interest+d.special),
+          cumInterest:p.cumulativeInterest,cumRegular:p.cumulativeRegular,cumSpecial:p.cumulativeSpecial});
+        delete p.pending;
+      });
+      cumulI=round(cumulI+monthI); cumulR=round(cumulR+monthR); cumulS=round(cumulS+monthS);
+      const balance=round(sum(parts,'balance'));
+      rows.push({month:m,balance,interest:round(monthI),regular:round(monthR),special:round(monthS),principal:round(monthR-monthI+monthS),
+        cumInterest:cumulI,cumRegular:cumulR,cumSpecial:cumulS,cumPrincipal:round(total-balance),cost:round(cumulI+fees),projected:projectedEver});
+    }
+    return {offer:o,...validation,total,fees,rows,parts,baseMonthly:round(sum(parts,'base')),initialMonthly:rows[1].regular};
+  }
+  function sale(g,result) {
+    if(!result.valid) return null;
+    const n=Math.round(g.sellYears*12), at=result.rows[n];
+    const penalty=result.offer.penalty===null?0:result.offer.penalty;
+    const ownerCost=round(g.ownerAnnual*n/12);
+    const outlay=round(g.equity+result.fees+at.cumRegular+at.cumSpecial+ownerCost);
+    const fixedExit=g.sellFixed+penalty+g.sellTax;
+    const net=round(g.sellPrice*(1-g.sellPct/100)-fixedExit-at.balance);
+    const monthlyReturn=Math.expm1(Math.log1p(g.investmentReturn/100)/12);
+    let relativeFuture=g.equity+result.fees-g.rentStartup, rentTotal=g.rentStartup;
+    for(let m=1;m<=n;m++) {
+      const rent=round(g.rentMonthly*Math.pow(1+g.rentGrowth/100,Math.floor((m-1)/12)));
+      rentTotal+=rent;
+      relativeFuture=relativeFuture*(1+monthlyReturn)+result.rows[m].regular+result.rows[m].special+g.ownerAnnual/12-rent;
+    }
+    rentTotal=round(rentTotal);
+    const denom=1-g.sellPct/100;
+    return {n,at,penalty,penaltyUnknown:result.offer.penalty===null,ownerCost,outlay,net,rentTotal,
+      nominalGain:round(net-outlay),housingCost:round(outlay-net),versusRent:round(net-outlay+rentTotal),
+      relativeFuture:round(relativeFuture),versusRentInvested:round(net-relativeFuture),
+      breakEven:Math.max(0,round((outlay+at.balance+fixedExit)/denom)),
+      rentBreakEven:Math.max(0,round((outlay-rentTotal+at.balance+fixedExit)/denom)),
+      investedBreakEven:Math.max(0,round((relativeFuture+at.balance+fixedExit)/denom))};
+  }
+  function normalize(input) {
+    if(!input || input.schema!==VERSION || !input.global || !Array.isArray(input.offers) || input.offers.length<1 || input.offers.length>8)
+      throw new Error('不是有效的 v1 方案文件，或方案数量不在 1–8 之间。');
+    const safe=defaults(); safe.demo=Boolean(input.demo);
+    Object.keys(globalRules).forEach(k=>{ const v=input.global[k]; if(v===null) safe.global[k]=null;
+      else if(!finite(v) || v<globalRules[k][0] || v>globalRules[k][1]) throw new Error('共同参数 '+k+' 无效。'); else safe.global[k]=v; });
+    if(!['contract','equal'].includes(input.global.compareMode)) throw new Error('月供比较模式无效。');
+    safe.global.compareMode=input.global.compareMode;
+    const text=(v,max)=>typeof v==='string'?v.slice(0,max):'';
+    safe.offers=input.offers.map((o,i)=>{
+      if(!o || !Array.isArray(o.tranches) || o.tranches.length<1 || o.tranches.length>6) throw new Error('每个报价需包含 1–6 笔贷款。');
+      const z=offer('O'+i,text(o.name,100)||('方案 '+(i+1)),0,10);
+      for(const k of Object.keys(offerRules)) {const v=o[k]; if(v===null) z[k]=null; else if(!finite(v)||v<offerRules[k][0]||v>offerRules[k][1]) throw new Error('报价参数 '+k+' 无效。'); else z[k]=v;}
+      z.flexibility=text(o.flexibility,300); z.notes=text(o.notes,3000);
+      z.tranches=o.tranches.map((t,j)=>{
+        if(!t || !['monthly','tilgung'].includes(t.basis)) throw new Error('还款方式无效。');
+        const p=tranche(z.id+'-'+j,0,0,10); p.name=text(t.name,100); p.basis=t.basis;
+        Object.keys(trancheRules).forEach(k=>{const v=t[k]; if(v===null) p[k]=null; else if(!finite(v)||v<trancheRules[k][0]||v>trancheRules[k][1]) throw new Error('分笔参数 '+k+' 无效。'); else p[k]=v;});
+        return p;
+      }); return z;
+    });
+    const u=input.ui||{};
+    safe.ui={tab:['compare','inputs','sale','refi','schedule','help','reference'].includes(u.tab)?u.tab:'compare',
+      horizon:finite(u.horizon)?Math.min(40,Math.max(1,u.horizon)):5,
+      saleOffer:safe.offers[Math.max(0,input.offers.findIndex(o=>o.id===u.saleOffer))].id,
+      scheduleOffer:safe.offers[Math.max(0,input.offers.findIndex(o=>o.id===u.scheduleOffer))].id,
+      chartYear:finite(u.chartYear)?Math.min(40,Math.max(0,Math.round(u.chartYear))):5,
+      referenceBank:['cb','ing'].includes(u.referenceBank)?u.referenceBank:'cb',
+      referenceOffer:safe.offers[Math.max(0,input.offers.findIndex(o=>o.id===u.referenceOffer))].id};
+    return safe;
+  }
+  const api={VERSION,round,sum,finite,clone,globalRules,trancheRules,offerRules,defaults,blank,tranche,offer,loanNeed,basePayment,validate,refiPayment,simulateOffer,sale,normalize};
+  if(typeof module!=='undefined' && module.exports) module.exports=api; else root.MortgageCore=api;
+})(typeof window!=='undefined'?window:globalThis);
+
+</script>
+<script>
+(function () {
+  'use strict';
+  const C=window.MortgageCore, $=id=>document.getElementById(id), app=$('app');
+  const KEY='finanzierung-offer-comparator-v1';
+  const colors=['#284e70','#128273','#ab6741','#6b598a','#3f7191','#9a687a','#6b7541','#70523e'];
+  const fmt=new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0});
+  const fmt2=new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2});
+  const num=new Intl.NumberFormat('de-DE',{maximumFractionDigits:2});
+  const euro=(v,cents=false)=>C.finite(v)?(cents?fmt2:fmt).format(v):'—';
+  const pct=v=>C.finite(v)?num.format(v)+'%':'未填';
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const signed=v=>C.finite(v)?(v>0?'+':'')+euro(v):'—';
+  const tone=(v,positiveGood=true)=>Math.abs(v)<0.005?'neutral':(v>0===positiveGood?'good':'bad');
+  let state=C.defaults(), results=[], remember=false, storageAvailable=true, debounce=null, toastTimer=null, fieldCounter=0, lastSaleId=null;
+  let startupMessage='', snapshot=false;
+  try{
+    const embedded=JSON.parse($('embedded-state').textContent);
+    state=C.normalize(embedded.state||embedded); snapshot=Boolean(embedded.embeddedSnapshot);
+  }catch(e){startupMessage='文件内数据无法读取，已改用明确标记的演示数据。';}
+  try{
+    const cached=localStorage.getItem(KEY);
+    if(cached && !snapshot){const data=JSON.parse(cached);state=C.normalize(data.state);remember=true;startupMessage='已恢复此浏览器保存的方案。';}
+    else if(snapshot) startupMessage='已读取此 HTML 文件内的方案快照。';
+  }catch(e){storageAvailable=false;}
+  $('remember').checked=remember;
+  function toast(text){$('toast').textContent=text;$('toast').classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.add('hidden'),6000);}
+  function persist(){
+    if(remember){try{localStorage.setItem(KEY,JSON.stringify({state,savedAt:new Date().toISOString()}));$('save-status').textContent='已在此浏览器保存；建议同时导出文件备份。';}
+      catch(e){storageAvailable=false;$('save-status').textContent='此浏览器无法保存本地文件数据，请使用“导出方案”或“保存带数据 HTML”。';}}
+    else $('save-status').textContent=snapshot?'当前基于文件内快照；新的更改请再次导出保存。':'更改仅保留在当前页面；请导出保存。';
+  }
+  function bindAttrs(kind,k,o,t){return kind==='g'?`data-g="${k}"`:kind==='o'?`data-offer="${o.id}" data-key="${k}"`:`data-offer="${o.id}" data-tranche="${t.id}" data-key="${k}"`;}
+  function field(kind,obj,k,label,de='',opts={},o=null,t=null){
+    const id='f-'+(++fieldCounter), attrs=bindAttrs(kind,k,o,t),val=obj[k],rules=kind==='g'?C.globalRules:kind==='o'?C.offerRules:C.trancheRules;
+    let control;
+    if(opts.options) control=`<select id="${id}" ${attrs}>${opts.options.map(([v,n])=>`<option value="${v}" ${v===val?'selected':''}>${esc(n)}</option>`).join('')}</select>`;
+    else if(opts.textarea) control=`<textarea id="${id}" ${attrs} maxlength="3000">${esc(val)}</textarea>`;
+    else if(opts.text) control=`<input id="${id}" ${attrs} type="text" maxlength="${opts.maxlength||300}" value="${esc(val)}">`;
+    else {const rr=rules[k]||[0,100000000];control=`<input id="${id}" ${attrs} type="number" inputmode="decimal" min="${rr[0]}" max="${rr[1]}" step="${opts.step||'any'}" value="${val===null?'':val}" placeholder="${esc(opts.placeholder||(opts.optional?'可留空':'必填'))}" ${opts.optional?'data-optional="true"':''}>`;}
+    return `<div class="field ${opts.span2?'span2':''} ${opts.spanall?'spanall':''}"><label for="${id}">${label}${de?`<small>${de}</small>`:''}</label>${control}${opts.hint?`<span class="hint">${opts.hint}</span>`:''}</div>`;
+  }
+  const gf=(k,label,de='',opts={})=>field('g',state.global,k,label,de,opts);
+  const of=(o,k,label,de='',opts={})=>field('o',o,k,label,de,opts,o);
+  const tf=(o,t,k,label,de='',opts={})=>field('t',t,k,label,de,opts,o,t);
+  function buildGlobalFields(){
+    $('project-fields').innerHTML=[gf('price','成交房价 €','Kaufpreis'),gf('buyPct','购房附加成本 %','Kaufnebenkosten · 合计比例'),gf('buyFixed','附加固定成本 €','不与上述百分比重复'),gf('renovation','初期装修／家具 €','购房初期总投入，含于项目预算'),gf('equity','投入购房的自有资金 €','Eigenkapital · 不含备用金',{span2:true}),'<div class="field span2"><label>填写提示<small>仅用不带千分位的数字，例如 700000、3.6</small></label><p class="mini">购房附加成本含你确认的税费、公证、登记、中介等。统一录入实际成本，工具不猜测所在州税率。</p></div>'].join('');
+    $('compare-fields').innerHTML=[gf('compareMode','月供比较方式','原合同 vs 相同预算试算',{options:[['contract','按各 Angebot 原始月供'],['equal','统一初始月供（假设试算）']]}),gf('sameMonthly','统一初始总月供 €','仅在统一月供试算中生效'),gf('specialAnnual','每年额外还款总预算 €','Sondertilgung · 所有分笔合计'),gf('refiRate','锁息结束后的假设利率 %','Anschlusszins · 非未来报价'),gf('refiYears','续贷后完全还清年限','不是初始 Tilgung %',{step:1}),gf('refiSpecialPct','续贷后额外还款额度 %','占续贷起点本金／年 · 假设')].join('');
+    $('sale-fields').innerHTML=[gf('sellYears','持有后出售的年数','从模拟起点计算',{step:0.5}),gf('sellPrice','预计卖价 €','Verkaufspreis · 手工情境'),gf('sellPct','出售比例费用 %','例如卖方实际承担的中介费'),gf('sellFixed','出售固定费用 €','不含补偿金，不重复比例费'),gf('sellTax','出售税费 €','人工录入；0 不代表确认免税'),gf('ownerAnnual','仅房主承担的持有成本 €/年','维修、税险等，不计双方共用成本'),'<div id="sale-penalty-field" class="span2"></div>'].join('');
+    $('rent-fields').innerHTML=[gf('rentMonthly','起始月租金 €','可比冷租及租客独有月度支出'),gf('rentGrowth','租金每年增长 %','每满 12 个月调整一次'),gf('rentStartup','租房启动成本 €','搬家／新增家具等不可回收支出'),gf('investmentReturn','结余资金税后年收益率 %','0% 为不计机会成本；非收益承诺')].join('');
+    $('refi-fields').innerHTML=[gf('refiRate','统一续贷情境利率 %','同时用于超过锁息期的所有模拟'),gf('refiYears','续贷后完全还清年限','以此计算等额月供',{step:1}),gf('refiSpecialPct','续贷后额外还款额度 %','占该笔续贷本金／年 · 假设')].join('');
+    lastSaleId=null;
+  }
+  function buildOfferEditors(){
+    $('offer-editors').innerHTML=state.offers.map((o,i)=>`<article class="offer-card">
+      <div class="offer-head"><div class="labelrow"><span class="badge ${i===0?'benchmark':''}">${i===0?'BENCHMARK':'OFFER '+(i+1)}</span><input type="text" aria-label="方案 ${i+1} 名称" data-offer="${o.id}" data-key="name" value="${esc(o.name)}" maxlength="100"></div><div class="actions no-print">${i>0?`<button type="button" class="small" data-action="benchmark" data-id="${o.id}">设为基准</button>`:''}<button type="button" class="small" data-action="duplicate" data-id="${o.id}" ${state.offers.length>=8?'disabled':''}>复制</button><button type="button" class="small danger" data-action="delete-offer" data-id="${o.id}" ${state.offers.length<=1?'disabled':''}>删除</button></div></div>
+      <div class="offer-body"><div id="offer-summary-${o.id}" class="offer-summary"></div>
+      ${o.tranches.map((t,j)=>`<div class="tranche"><div class="tranchehead"><div class="name"><span class="num">${String(j+1).padStart(2,'0')}</span><input type="text" aria-label="第 ${j+1} 笔贷款名称" data-offer="${o.id}" data-tranche="${t.id}" data-key="name" value="${esc(t.name)}" maxlength="100"></div><button type="button" class="small danger no-print" data-action="delete-tranche" data-id="${o.id}" data-tid="${t.id}" ${o.tranches.length<=1?'disabled':''}>删除分笔</button></div><div class="grid five">
+      ${tf(o,t,'amount','贷款金额 €','Darlehensbetrag')}${tf(o,t,'rate','名义年利率 %','Sollzins')}${tf(o,t,'effective','有效年利率 %','Effektivzins · 仅记录',{optional:true})}${tf(o,t,'fixedYears','锁息期 / 年','Sollzinsbindung',{step:0.5})}${tf(o,t,'basis','还款参数来源','建议优先按原始月供录入',{options:[['tilgung','用初始 Tilgung 计算'],['monthly','直接输入合同月供']]})}
+      ${tf(o,t,'tilgung','初始还款率 %','Anfängliche Tilgung')}${tf(o,t,'monthly','合同基础月供 €','Monatliche Rate · 宽限期后')}${tf(o,t,'specialPct','每年额外还款上限 %','占该笔原始本金')}${tf(o,t,'graceMonths','最初只付息月数','Tilgungsfreie Anlaufzeit',{step:1})}
+      </div></div>`).join('')}
+      <div class="actions no-print"><button type="button" class="small" data-action="add-tranche" data-id="${o.id}" ${o.tranches.length>=6?'disabled':''}>＋ 新增一笔贷款</button>${o.tranches.length===1?`<button type="button" class="small" data-action="match-need" data-id="${o.id}">金额同步为共同贷款需求</button>`:''}</div>
+      <details><summary>融资费用、提前还款与合同条款</summary><div class="grid">
+      ${of(o,'fees','一次性融资费用 €','仅融资特有，不重复购房附加成本')}${of(o,'commitment','资金预备利息合计 €','Bereitstellungszinsen · 已知／自估总额')}${of(o,'freeMonths','资金预备利息免计月数','Bereitstellungszinsfreie Zeit · 仅记录',{step:1})}${of(o,'commitmentRate','资金预备利息月费率 %','每月费率 · 仅记录，不自动计费')}
+      ${of(o,'penalty','出售时提前还款补偿金 €','Vorfälligkeitsentschädigung',{optional:true,hint:'空白 = 未确认；卖房测算暂不计该项。'})}${of(o,'flexibility','Tilgung 可调整条款','次数、范围、是否收费',{text:true,span2:true})}${of(o,'notes','备注／报价有效期／待确认条件','例如银行名称、日期、放款要求',{textarea:true,spanall:true})}
+      </div></details><div id="offer-status-${o.id}"></div></div></article>`).join('');
+    $('add-offer').disabled=state.offers.length>=8;
+  }
+  function syncFields(){
+    app.querySelectorAll('[data-g],input[data-offer],select[data-offer],textarea[data-offer]').forEach(el=>{
+      let obj=state.global,k=el.dataset.g;
+      if(!k){obj=state.offers.find(o=>o.id===el.dataset.offer);if(!obj)return;k=el.dataset.key;if(el.dataset.tranche)obj=obj.tranches.find(t=>t.id===el.dataset.tranche);}
+      if(!obj)return;
+      if(document.activeElement!==el)el.value=obj[k]??'';
+      let inactive=false;
+      if(el.dataset.tranche){const t=obj;inactive=(k==='tilgung' && (t.basis==='monthly'||state.global.compareMode==='equal')) ||(k==='monthly'&&(t.basis==='tilgung'||state.global.compareMode==='equal'));}
+      if(el.dataset.g==='sameMonthly')inactive=state.global.compareMode!=='equal';
+      if(el.tagName==='INPUT' && el.type==='number'){
+        el.disabled=inactive;const optional=el.dataset.optional==='true';
+        const invalid=!inactive && !(optional && obj[k]===null) && (!C.finite(obj[k])||obj[k]<Number(el.min)||obj[k]>Number(el.max));
+        el.closest('.field')?.classList.toggle('invalid',invalid);el.setAttribute('aria-invalid',String(invalid));
+      }
+    });
+  }
+  function renderBanner(){
+    $('dataset-banner').innerHTML=state.demo?`<div class="notice"><div><strong>演示数据 · 不是你的真实 Angebot</strong><p>主计算器中的房价、利率与费用仍为演示。Reference 标签页另存真实融资建议的参考摘录；查看参考不会自动更换工作输入。</p></div><div class="actions no-print"><button type="button" class="small" data-action="blank">录入我的报价</button><button type="button" class="small light" data-action="confirm-data">已核对，标记为我的数据</button></div></div>`:`<div class="notice info"><div><strong>当前为你的手工输入数据</strong><p>结果依赖输入和模型假设，未经银行核验。请保留原始 Angebot 进行对照。</p></div><button type="button" class="small no-print" data-tab="inputs">编辑参数</button></div>`;
+    $('footer-data').textContent=state.demo?'当前：演示数据，非你的实际银行报价。':'当前：手工输入方案；不构成贷款或收益保证。';
+  }
+  function setTab(tab){
+    if(!['compare','inputs','sale','refi','schedule','help','reference'].includes(tab))tab='compare';
+    state.ui.tab=tab;
+    document.querySelectorAll('.page').forEach(el=>el.hidden=el.id!=='page-'+tab);
+    document.querySelectorAll('.tabs [data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
+    if(tab==='compare')drawChart(); persist();
+  }
+  function selectors(){
+    const options=state.offers.map((o,i)=>`<option value="${o.id}">${esc(o.name)}${i===0?' · 基准':''}</option>`).join('');
+    ['sale','schedule'].forEach(k=>{if(!state.offers.some(o=>o.id===state.ui[k+'Offer']))state.ui[k+'Offer']=state.offers[0].id;$(k+'-offer').innerHTML=options;$(k+'-offer').value=state.ui[k+'Offer'];});
+    if(lastSaleId!==state.ui.saleOffer){const o=state.offers.find(o=>o.id===state.ui.saleOffer);$('sale-penalty-field').innerHTML=of(o,'penalty','该方案的提前还款补偿金 €','Vorfälligkeitsentschädigung · 由银行确认',{optional:true,hint:'留空时结果不包含该项；输入 0 只是你设定的假设。'});lastSaleId=o.id;}
+  }
+  function globalSummary(){
+    const g=state.global,need=C.loanNeed(g),buy=C.finite(g.price)&&C.finite(g.buyPct)&&C.finite(g.buyFixed)?g.price*g.buyPct/100+g.buyFixed:null;
+    $('project-summary').innerHTML=`贷款需求 <strong>${euro(need)}</strong> = 房价 ${euro(g.price)} + 购房附加成本 ${euro(buy)} + 装修／家具 ${euro(g.renovation)} − 自有资金 ${euro(g.equity)}。融资特有费用另计现金支出。`;
+    $('common-strip').innerHTML=`<div class="item"><small>共同贷款需求</small><strong>${euro(need)}</strong></div><div class="item"><small>投入购房的自有资金</small><strong>${euro(g.equity)}</strong></div><div class="item"><small>年度 Sondertilgung 预算</small><strong>${euro(g.specialAnnual)}</strong></div><div class="item"><small>比较方式</small><strong style="font-size:14px">${g.compareMode==='equal'?'统一初始月供 · 试算':'按原报价月供'}</strong></div><button type="button" class="small push no-print" data-tab="inputs">修改共同假设 ↗</button>`;
+  }
+  function badge(r,n){return r.valid && r.rows[n].projected?'<span class="badge forecast">含续贷假设</span>':'<span class="badge">锁息期内／已还清</span>';}
+  function renderCompare(){
+    const n=Math.round(state.ui.horizon*12),b=results[0],valid=results.filter(r=>r.valid),best=valid.reduce((a,r)=>!a||r.rows[n].cost<a.rows[n].cost?r:a,null);
+    $('horizon').value=state.ui.horizon;document.querySelectorAll('[data-horizon]').forEach(e=>e.setAttribute('aria-pressed',String(Number(e.dataset.horizon)===state.ui.horizon)));
+    $('comparison-alerts').innerHTML=results.filter(r=>!r.valid).map(r=>`<div class="notice error inline"><strong>${esc(r.offer.name)} 暂不参与比较</strong>${r.errors.map(esc).join('<br>')}</div>`).join('');
+    if(state.global.compareMode==='equal')$('comparison-alerts').innerHTML+='<div class="notice inline">目前是统一初始月供试算，不是原合同现金流。相同初始预算按分笔本金比例分配，需银行认可。</div>';
+    if(valid.some(r=>r.rows[n].projected))$('comparison-alerts').innerHTML+=`<div class="notice inline">第 ${num.format(state.ui.horizon)} 年结果已包含部分续贷：假设利率 ${pct(state.global.refiRate)}，续贷后 ${num.format(state.global.refiYears)} 年完全还清，未来利率不确定。</div>`;
+    const costB=b.valid?b.rows[n].cost:null,save=best&&b.valid?costB-best.rows[n].cost:null;
+    const kpi=(l,v,s,cls='')=>`<div class="kpi"><div class="label">${l}</div><div class="value ${cls}">${v}</div><div class="sub">${s}</div></div>`;
+    $('kpis').innerHTML=kpi(`基准 · ${num.format(state.ui.horizon)} 年融资成本`,euro(costB),esc(state.offers[0].name))+kpi('当前最低成本较基准少',euro(save),best?esc(best.offer.name)+' · 仅按名义融资成本':'先补齐贷款参数',save>0?'good':'')+kpi(`基准 · ${num.format(state.ui.horizon)} 年剩余本金`,euro(b.valid?b.rows[n].balance:null),'Restschuld · 不与累计本金重复扣除');
+    if(best && b.valid && best!==b){const d=best.rows[n].balance-b.rows[n].balance,dm=best.initialMonthly-b.initialMonthly;
+      $('insight').innerHTML=`<div class="notice info inline"><strong>${esc(best.offer.name)}：此时点融资成本较基准少 ${euro(save)}</strong>首月月供${dm>0?'高':'低'} ${euro(Math.abs(dm),true)}，第 ${num.format(state.ui.horizon)} 年剩余本金${d>0?'多':'少'} ${euro(Math.abs(d))}。这不是综合推荐，还需核对锁息长度、退出成本与灵活性。</div>`;
+    }else $('insight').innerHTML=valid.length>1?'<div class="footnote" style="margin-bottom:14px">当前参数下，基准的名义融资成本不高于其他有效方案。不同现金流的资金机会成本未在此排名中折现。</div>':'';
+    const row=(label,fn,focus=false)=>`<tr ${focus?'class="focusrow"':''}><th scope="row">${label}</th>${results.map(r=>`<td>${r.valid?fn(r,r.rows[n]):'—'}</td>`).join('')}</tr>`;
+    $('comparison-table').innerHTML=`<table class="comparison"><thead><tr><th scope="col">第 ${num.format(state.ui.horizon)} 年<br><small>金额按整欧元展示，内部按分计算</small></th>${results.map((r,i)=>`<th scope="col">${esc(r.offer.name)}<small>${i===0?'基准方案 · ':''}${r.offer.tranches.length} 笔贷款</small>${r.valid?badge(r,n):'<span class="badge forecast">参数待补齐</span>'}</th>`).join('')}</tr></thead><tbody>`+
+      row('贷款金额',r=>euro(r.total))+
+      row('首月实际月供',r=>`<strong>${euro(r.initialMonthly,true)}</strong>`)+
+      row('宽限期后基础月供',r=>euro(r.baseMonthly,true))+
+      row('第 '+num.format(state.ui.horizon)+' 年末当月月供',(r,a)=>euro(a.regular,true))+
+      row('累计支付（本金＋利息）',(r,a)=>`${euro(a.cumRegular+a.cumSpecial)}<small>含额外还款，不含费用</small>`)+
+      row('其中：累计利息',(r,a)=>euro(a.cumInterest))+
+      row('其中：已偿还本金',(r,a)=>euro(a.cumPrincipal))+
+      row('累计额外还款',(r,a)=>`${euro(a.cumSpecial)}<small>预算 ${euro(Math.floor(n/12)*state.global.specialAnnual)}</small>`)+
+      row('一次性融资费＋预备利息',r=>euro(r.fees))+
+      row('<strong>融资成本</strong>',(r,a)=>`<strong>${euro(a.cost)}</strong>`,true)+
+      row('相对基准：融资成本',(r,a)=>b.valid?`<span class="${tone(a.cost-b.rows[n].cost,false)}">${signed(a.cost-b.rows[n].cost)}</span>`:'基准尚未有效')+
+      row('<strong>剩余本金</strong>',(r,a)=>`<strong>${euro(a.balance)}</strong>`,true)+
+      row('相对基准：剩余本金',(r,a)=>b.valid?`<span class="${tone(a.balance-b.rows[n].balance,false)}">${signed(a.balance-b.rows[n].balance)}</span>`:'基准尚未有效')+
+      row('各笔原始锁息期限',r=>r.offer.tranches.map(t=>esc(t.name)+': '+num.format(t.fixedYears)+' 年').join('<br>'))+
+      row('记录的 Effektivzins',r=>r.offer.tranches.map(t=>esc(t.name)+': '+pct(t.effective)).join('<br>'))+
+      row('还款调整条款',r=>esc(r.offer.flexibility||'未填写'))+'</tbody></table>';
+  }
+  function chartEnd(){return Math.min(40,Math.ceil(Math.max(10,state.ui.horizon,state.global.sellYears||0,...state.offers.flatMap(o=>o.tranches.map(t=>t.fixedYears||0)))));}
+  function drawChart(){
+    if(!results.length)return;
+    const valid=results.filter(r=>r.valid),el=$('debt-chart'),end=chartEnd();
+    $('chart-year').max=end;state.ui.chartYear=Math.min(end,state.ui.chartYear);$('chart-year').value=state.ui.chartYear;
+    if(!valid.length){el.innerHTML='<div class="empty">补齐有效方案后，这里显示剩余本金曲线。</div>';$('chart-legend').innerHTML='';$('chart-readout').innerHTML='';return;}
+    const W=Math.max(300,Math.round(el.getBoundingClientRect().width)||800),H=W<500?230:280,L=55,R=17,T=20,B=31;
+    const ymax=Math.max(...valid.map(r=>r.total))*1.06,x=m=>L+(W-L-R)*m/(end*12),y=b=>T+(H-T-B)*(1-b/ymax);
+    const line=(r,start,stop)=>{let ms=[start];for(let m=Math.ceil((start+1)/12)*12;m<stop;m+=12)ms.push(m);if(stop>start)ms.push(stop);return ms.map((m,i)=>(i?'L':'M')+x(m).toFixed(2)+','+y(r.rows[m].balance).toFixed(2)).join(' ');};
+    let svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="各方案剩余本金随时间的变化。下方滑块可查看精确年度数值。"><title>剩余本金曲线</title>`;
+    for(let i=0;i<=4;i++){const v=ymax*i/4,yy=y(v);svg+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="#e0e7e1"/><text x="${L-9}" y="${yy+4}" text-anchor="end" font-size="11" fill="#617179">${v>=1000?num.format(Math.round(v/1000))+'k':num.format(Math.round(v))}</text>`;}
+    const ticks=W<450?4:5;for(let i=0;i<=ticks;i++){const a=end*i/ticks;svg+=`<text x="${x(a*12)}" y="${H-8}" text-anchor="middle" font-size="11" fill="#617179">${num.format(a)}年</text>`;}
+    svg+='<text x="10" y="11" font-size="10" fill="#617179">EUR</text>';
+    valid.forEach(r=>{const idx=results.indexOf(r),first=Math.min(...r.parts.map(p=>p.fixed)),stop=Math.min(end*12,first);
+      svg+=`<path d="${line(r,0,stop)}" fill="none" stroke="${colors[idx]}" stroke-width="2.6"/>`;
+      if(first<end*12)svg+=`<path d="${line(r,first,end*12)}" fill="none" stroke="${colors[idx]}" stroke-width="2.6" stroke-dasharray="6 5"/>`;
+    });
+    const m=state.ui.chartYear*12;svg+=`<line x1="${x(m)}" x2="${x(m)}" y1="${T}" y2="${H-B}" stroke="#83968a" stroke-dasharray="3 4"/>`;
+    valid.forEach(r=>svg+=`<circle cx="${x(m)}" cy="${y(r.rows[m].balance)}" r="4" fill="white" stroke="${colors[results.indexOf(r)]}" stroke-width="2"/>`);
+    el.innerHTML=svg+'</svg>';
+    $('chart-legend').innerHTML=valid.map(r=>`<span><i class="swatch" style="background:${colors[results.indexOf(r)]}"></i>${esc(r.offer.name)}</span>`).join('');
+    $('chart-year-label').textContent=state.ui.chartYear;
+    $('chart-readout').innerHTML=valid.map(r=>`<div><small>${esc(r.offer.name)} · 第 ${state.ui.chartYear} 年</small><strong>${euro(r.rows[m].balance)}</strong></div>`).join('');
+  }
+  function renderEditorsStatus(){
+    results.forEach(r=>{
+      const total=C.sum(r.offer.tranches,'amount');
+      const node=$('offer-summary-'+r.offer.id);if(node)node.innerHTML=`贷款合计 <strong>${euro(total)}</strong>${r.valid?`　首月月供 <strong>${euro(r.initialMonthly,true)}</strong>　基础月供 <strong>${euro(r.baseMonthly,true)}</strong>`:''}`;
+      const status=$('offer-status-'+r.offer.id);if(status)status.innerHTML=r.errors.length?`<div class="notice error inline">${r.errors.map(esc).join('<br>')}</div>`:r.warnings.length?`<div class="footnote">${r.warnings.map(esc).join('<br>')}</div>`:'';
+    });
+  }
+  function renderSale(){
+    const r=results.find(r=>r.offer.id===state.ui.saleOffer),g=state.global;
+    if(!r||!r.valid){$('sale-results').innerHTML='<div class="empty">当前方案参数不完整。请先在“录入参数”修正提示。</div>';return;}
+    const z=C.sale(g,r),warn=z.penaltyUnknown?'<div class="notice inline"><strong>补偿金尚未确认：以下为暂算结果，不包含这笔可能的支出。</strong>请向银行索取指定出售日期的结清金额。不要将这里的“卖房回款”当成已确定金额。</div>':'';
+    const k=(l,v,s,good)=>`<div class="kpi"><div class="label">${l}</div><div class="value ${good||''}">${euro(v)}</div><div class="sub">${s}</div></div>`;
+    const row=(a,b)=>`<div><dt>${a}</dt><dd>${b}</dd></div>`;
+    const projected=z.at.projected?`<div class="notice inline">出售时点超过部分锁息期，已使用 ${pct(g.refiRate)} 的续贷利率假设。</div>`:'';
+    $('sale-results').innerHTML=warn+projected+`<div class="kpis">${k('卖房净回款',z.net,'扣除余债、出售费用与已填补偿金',z.net<0?'bad':'')}${k('累计购房现金投入',z.outlay,'含本金偿还；不等于经济损失')}${k('相对租房净资产差',z.versusRentInvested,`结余年收益率 ${pct(g.investmentReturn)}；正数为买房更有利`,tone(z.versusRentInvested))}</div>
+      <div class="two-col"><div class="panel"><h3>出售结算</h3><dl class="waterfall">${row('预计卖价',euro(g.sellPrice))}${row('− 出售比例费用 ('+pct(g.sellPct)+')',euro(g.sellPrice*g.sellPct/100))}${row('− 出售固定费用',euro(g.sellFixed))}${row('− 手填出售税费',euro(g.sellTax))}${row('− 提前还款补偿金',z.penaltyUnknown?'未确认，暂未计入':euro(z.penalty))}${row('− 当期剩余本金',euro(z.at.balance))}${row('卖房净回款',euro(z.net))}</dl>${z.net<0?'<p class="footnote bad">回款为负表示卖房款不足以结清，需另外补现金。</p>':''}</div>
+      <div class="panel"><h3>持有期间的现金账</h3><dl class="waterfall">${row('投入购房的自有资金',euro(g.equity))}${row('+ 融资费用与预备利息',euro(r.fees))}${row('+ 累计常规月供',euro(z.at.cumRegular))}${row('+ 累计额外还款',euro(z.at.cumSpecial))}${row('+ 房主持有成本',euro(z.ownerCost))}${row('累计购房投入',euro(z.outlay))}${row('净回款 − 累计投入',`<span class="${tone(z.nominalGain)}">${signed(z.nominalGain)}</span>`)}</dl><p class="footnote">这是不计居住收益的名义净结果，不是应税利润。</p></div></div>
+      <div class="panel"><h3>卖到多少，才达到你的“不亏”？</h3><div class="tablewrap"><table><thead><tr><th>判断口径</th><th>对应卖价</th><th>按当前卖价的净结果</th></tr></thead><tbody><tr><th scope="row">收回累计购房投入<small class="muted" style="display:block">不计免费居住的价值与资金机会成本</small></th><td><strong>${euro(z.breakEven)}</strong></td><td class="${tone(z.nominalGain)}">${signed(z.nominalGain)}</td></tr><tr><th scope="row">与继续租房持平<small class="muted" style="display:block">计租金和租房启动成本，不计投资收益</small></th><td><strong>${euro(z.rentBreakEven)}</strong></td><td class="${tone(z.versusRent)}">${signed(z.versusRent)}</td></tr><tr class="focusrow"><th scope="row">与租房＋结余积累持平<small class="muted" style="display:block">税后年收益率 ${pct(g.investmentReturn)}</small></th><td><strong>${euro(z.investedBreakEven)}</strong></td><td class="${tone(z.versusRentInvested)}">${signed(z.versusRentInvested)}</td></tr></tbody></table></div><p class="footnote">同期租房现金支出合计 ${euro(z.rentTotal)}，其中启动成本 ${euro(g.rentStartup)}。按输入收益率折算至出售时点，购房相对于租房的额外现金投入累积值为 ${euro(z.relativeFuture)}。不亏卖价按当前固定税费与补偿金假设反算，不自动随卖价重估。</p></div>
+      <div class="panel"><h3>同一卖价，各 Angebot 的退出结果</h3><div class="tablewrap"><table><thead><tr><th>方案</th><th>补偿金</th><th>剩余本金</th><th>卖房净回款</th><th>相对租房净资产差</th></tr></thead><tbody>${results.map(rr=>{if(!rr.valid)return`<tr><th>${esc(rr.offer.name)}</th><td colspan="4">参数待补齐</td></tr>`;const s=C.sale(g,rr);return`<tr><th>${esc(rr.offer.name)}</th><td>${s.penaltyUnknown?'未计／待确认':euro(s.penalty)}</td><td>${euro(s.at.balance)}</td><td>${euro(s.net)}</td><td class="${tone(s.versusRentInvested)}">${signed(s.versusRentInvested)}</td></tr>`;}).join('')}</tbody></table></div></div>`;
+  }
+  function renderRefi(){
+    const g=state.global;let rows='';
+    results.forEach(r=>{
+      if(!r.valid){rows+=`<tr><th>${esc(r.offer.name)}</th><td colspan="8">参数待补齐</td></tr>`;return;}
+      r.parts.forEach(p=>{const a=p.rows[p.fixed],B=a.balance;rows+=`<tr><th class="row-label">${esc(r.offer.name)}<small>${esc(p.t.name)}</small></th><td>${num.format(p.t.fixedYears)} 年</td><td><strong>${euro(B)}</strong></td><td>${euro(a.regular,true)}</td>${[3,4,5,6].map(rate=>`<td>${euro(C.refiPayment(B,rate,g.refiYears),true)}</td>`).join('')}<td><strong>${euro(C.refiPayment(B,g.refiRate,g.refiYears),true)}</strong></td></tr>`;});
+    });
+    $('refi-results').innerHTML=`<div class="tablewrap"><table><thead><tr><th>方案／贷款分笔</th><th>原锁息结束</th><th>该时点余债</th><th>到期当月月供</th><th>续贷 3%</th><th>续贷 4%</th><th>续贷 5%</th><th>续贷 6%</th><th>统一 ${pct(g.refiRate)}</th></tr></thead><tbody>${rows}</tbody></table></div><p class="footnote">各列单位：€／月；目标为续贷后 ${num.format(g.refiYears)} 年还清。月供表不预先扣除将来的 Sondertilgung，额外还款会在实际执行时缩短偿还时间。不同分笔的到期时间不同，不能将“该时点余债”列直接相加。</p><div class="notice inline"><strong>第 10 年并不自动等于无补偿退出。</strong>§489 BGB 的一般情形涉及全部放款满十年与六个月通知期；本表从模拟起点计时，未判断合同日期或通知送达情况。补偿金需另行核实。</div>`;
+  }
+  function scheduleFor(r){
+    if(!r||!r.valid)return [];
+    let last=r.rows.length-1;const paid=r.rows.find(a=>a.month>0 && a.balance===0);if(paid)last=paid.month;
+    return r.rows.slice(1,last+1);
+  }
+  function renderSchedule(){
+    const r=results.find(r=>r.offer.id===state.ui.scheduleOffer);
+    if(!r||!r.valid){$('schedule-description').textContent='请先补齐当前方案参数。';$('schedule-table').innerHTML='<div class="empty">还没有有效的还款计划。</div>';$('export-csv').disabled=true;return;}
+    $('export-csv').disabled=false;
+    const months=scheduleFor(r),last=months[months.length-1].month;let body='';
+    for(let m=12;m<last+12;m+=12){const end=Math.min(m,last),a=r.rows[end],prior=r.rows[Math.max(0,m-12)];body+=`<tr><th>第 ${Math.ceil(end/12)} 年${end%12?'（'+(end%12)+' 个月）':''}</th><td>${euro(a.cumRegular-prior.cumRegular)}</td><td>${euro(a.cumSpecial-prior.cumSpecial)}</td><td>${euro(a.cumInterest-prior.cumInterest)}</td><td>${euro(prior.balance-a.balance)}</td><td><strong>${euro(a.balance)}</strong></td><td>${euro(a.cumInterest)}</td><td>${a.projected?'含续贷假设':'原锁息／已还清'}</td></tr>`;}
+    $('schedule-description').innerHTML=`<p>原始贷款 ${euro(r.total)}；首月月供 ${euro(r.initialMonthly,true)}；一次性费用与预备利息 ${euro(r.fees)} 单独计入融资成本，不混入下表本金／利息。${months[months.length-1].balance>0?'显示至 40 年模拟上限，届时仍有剩余债务。':'预计于第 '+last+' 个月还清（依赖续贷与额外还款假设）。'}</p>`;
+    $('schedule-table').innerHTML=`<table><thead><tr><th>年度</th><th>本年常规月供</th><th>本年额外还款</th><th>本年利息</th><th>本年已还本金</th><th>年末余债</th><th>累计利息</th><th>计算阶段</th></tr></thead><tbody>${body}</tbody></table>`;
+  }
+  function recalc(){
+    results=state.offers.map(o=>C.simulateOffer(state.global,o));
+    selectors();syncFields();globalSummary();renderCompare();renderEditorsStatus();drawChart();renderSale();renderRefi();renderSchedule();renderReference();renderReferenceWarning();persist();
+  }
+  // Immutable source fixture. No quote values are read back from the working state.
+  const refFreeze=o=>{Object.values(o).forEach(v=>{if(v&&typeof v==='object')refFreeze(v);});return Object.freeze(o);};
+  const REF=refFreeze(JSON.parse($('reference-data').textContent));
+  const refSourceTag='[Reference 2026-09-01]';
+  const refMoney=v=>euro(v,true);
+  const refSigned=v=>C.finite(v)?(v>0?'+':'')+euro(C.round(v),true):'—';
+  const refTag=(text,style='')=>`<span class="ref-tag ${style}">${esc(text)}</span>`;
+  function referenceOffer(q){
+    const o=C.offer('REF-'+q.id,q.name+' · 2026-09-01',q.rate,q.fixedYears);
+    Object.assign(o,{fees:0,commitment:0,penalty:null,freeMonths:q.freeMonths,commitmentRate:q.commitmentMonthly,flexibility:q.flexibility,
+      notes:refSourceTag+' 融资建议参考快照，非审批或仍有效报价。PDF 第 '+q.page+' 页；仅购房与初始贷款来自原件。报价未另列预算项按 0 复现，费用按还款表示例不追加。卖房、租房、持有及续贷参数未由 PDF 提供，均为用户情境；10 年后不可当作原报价保证。'});
+    Object.assign(o.tranches[0],{amount:q.principal,rate:q.rate,effective:q.effective,fixedYears:10,basis:'monthly',monthly:q.monthly,tilgung:q.tilgung,specialPct:q.specialPct,graceMonths:0});
+    return o;
+  }
+  function referenceGlobals(q){
+    // Only these source/explicit-reproduction inputs affect the 120-month benchmark.
+    return {price:REF.project.price,buyPct:REF.project.buyPct,buyFixed:0,renovation:0,equity:q.equity,compareMode:'contract',specialAnnual:0};
+  }
+  const referenceCache=new Map();
+  let referenceUndo=null;
+  function referenceBenchmark(q){
+    if(!referenceCache.has(q.id))referenceCache.set(q.id,C.simulateOffer({...C.blank().global,...referenceGlobals(q)},referenceOffer(q),120));
+    return referenceCache.get(q.id);
+  }
+  function referenceChecks(q){
+    const r=referenceBenchmark(q);
+    if(!r.valid)return [];
+    return q.schedule.map(a=>{
+      const end=r.rows[a.endMonth],prev=r.rows[a.startMonth-1];
+      const actual={balance:end.balance,regular:C.round(end.cumRegular-prev.cumRegular),interest:C.round(end.cumInterest-prev.cumInterest),principal:C.round(end.cumPrincipal-prev.cumPrincipal)};
+      const deltas=Object.fromEntries(Object.keys(actual).map(k=>[k,C.round(actual[k]-a[k])]));
+      return {...a,actual,deltas,ok:Object.values(deltas).every(v=>v===0)};
+    });
+  }
+  function referenceNextState(q){
+    const next=C.clone(state);next.demo=false;
+    Object.assign(next.global,referenceGlobals(q));next.offers=[referenceOffer(q)];
+    Object.assign(next.ui,{tab:'reference',horizon:10,chartYear:10,saleOffer:next.offers[0].id,scheduleOffer:next.offers[0].id,referenceBank:q.id,referenceOffer:next.offers[0].id});
+    return C.normalize(next);
+  }
+  function referenceWarningText(){return '此方案含从 Reference 载入的融资建议数据；不是银行审批或仍有效的报价。卖房、租金、持有成本、补偿金和续贷设置不是 PDF 原始数据，仍需另外核实。';}
+  function renderReferenceWarning(){
+    let el=$('reference-persistent-warning');
+    if(!el){el=document.createElement('div');el.id='reference-persistent-warning';$('dataset-banner').after(el);}
+    const active=state.offers.some(o=>o.notes.includes(refSourceTag));
+    el.hidden=!active;el.className=active?'notice warning':'';el.textContent=active?referenceWarningText():'';
+  }
+  function refFieldRows(q,live){
+    const g=state.global,t=live?.tranches.length===1?live.tranches[0]:null;
+    const p=q.page, rows=[];
+    const add=(label,de,key,wanted,current,type,page,note='',kind='source')=>rows.push({label,de,key,wanted,current,type,page,note,kind});
+    add('成交房价','Kaufpreis','global.price',750000,g.price,'money',3);
+    add('购房附加成本合计','Grunderwerbsteuer + Notargebühr','global.buyPct',8.3,g.buyPct,'pct',3,'6.50% + 1.80% = 8.30%，合计 62,250 €；这不是单独的购房税率。','derived');
+    add('额外固定购房成本','原预算未另列','global.buyFixed',0,g.buyFixed,'money',3,'为复现原预算设 0，不再重复计入上面的 62,250 €；不代表实际没有其他费用。','assumption');
+    add('初期装修／家具','原预算未另列','global.renovation',0,g.renovation,'money',3,'仅为复现设 0；不是对实际装修需要的估计。','assumption');
+    add('实际投入自有资金','Eingesetztes / verwendetes Guthaben','global.equity',q.equity,g.equity,'money',q.id==='ing'?12:3,'可用资金为 260,000 €；ING 实际投入少 50 €。');
+    add('贷款本金','Darlehensbetrag','offers[].tranches[].amount',q.principal,live?C.sum(live.tranches,'amount'):null,'money',p,'当前方案这一行显示分笔本金合计；其余单笔字段只在恰好一笔时对应。');
+    add('名义年利率','Gebundener Sollzins','tranches[].rate',q.rate,t?.rate,'pct',p,'月利息使用此值；不要填成有效年利率。');
+    add('有效年利率','Effektiver Jahreszins','tranches[].effective',q.effective,t?.effective,'pct',p,'现有引擎仅记录，不直接用于月利息。');
+    add('月供比较方式','按原报价复现','global.compareMode','contract',g.compareMode,'text',p,'选择“按各 Angebot 原始月供”，不要用统一月供进行原报价验算。','assumption');
+    add('还款输入来源','优先用原文件月供','tranches[].basis','monthly',t?.basis,'text',p,'选择“直接输入合同月供”。初始 Tilgung 仍保留为 2%。','assumption');
+    add('每月付款','Monatliche Gesamtrate','tranches[].monthly',q.monthly,t?.monthly,'money',p);
+    add('初始还款率','Tilgungssatz','tranches[].tilgung',2,t?.tilgung,'pct',p,'不是每月归还 2% 本金，也不是贷款总期限。');
+    add('锁息期','Zinsbindung','tranches[].fixedYears',10,t?.fixedYears,'years',p,'10 年即 120 次月供，不是 10 年还清。');
+    add('允许额外还款上限','Optionale Sondertilgung p.a.','tranches[].specialPct',q.specialPct,t?.specialPct,'pct',p,q.id==='cb'?'选定方案为 0%；不要根据下方一般条款自行改成 5%。':'5% × 552,300 = 27,615 € / 日历年；额度不是实际付款。');
+    add('实际年度额外还款预算','按原还款表复现','global.specialAnnual',0,g.specialAnnual,'money',q.schedulePage,'还款表未执行 Sondertilgung；复现时实际预算为 0，两家都相同。','assumption');
+    add('起始只付息期','Tilgungsfreie Anlaufzeit','tranches[].graceMonths',0,t?.graceMonths,'months',p,'首期已还本金，应为 0；切勿把 6 个月资金预备利息免计期填在这里。','derived');
+    add('资金预备利息免计期','Bereitstellungszinsfreie Zeit','offers[].freeMonths',6,live?.freeMonths,'months',p,'只是条款记录；现有引擎假设期初一次性全额放款。');
+    add('资金预备利息月费率','Bereitstellungs-Zins jährlich → monatlich','offers[].commitmentRate',q.commitmentMonthly,live?.commitmentRate,'pct',p,p===5?'原件年费率 3.00% ÷ 12 = 0.25% / 月；不可直接填 3。':'原件年费率 2.40% ÷ 12 = 0.20% / 月；不可直接填 2.4。','derived');
+    add('融资费用','费用栏 / 范围需确认','offers[].fees',0,live?.fees,'money',q.schedulePage,'为复现此还款表不追加融资费用；原表费用栏为 0，并不确认全部合同成本为 0。','assumption');
+    add('已发生资金预备利息总额','Bereitstellungszinsen Gesamtbetrag','offers[].commitment',0,live?.commitment,'money',p,'按本示例一次性放款设 0；不根据 6 个月与月费率自动收费。','assumption');
+    add('放款日 / 首次还款日','Auszahlungszeitpunkt / Tilgungsbeginn','无对应日期字段',q.disbursementDate+' / '+q.firstPaymentDate,null,'text',p,'Reference 以这两个日期标记模拟轴；未改原引擎为逐日计息。','record');
+    add('预计总期限','Kalkulierte Laufzeit (ca.)','无对应初始总期限字段','约 28 年',null,'text',p,'不可填进 fixedYears，也不可把它当 refiYears。后者是续贷之后的完全还清年限。','record');
+    add('提前还款补偿金','Vorfälligkeitsentschädigung','offers[].penalty',null,live?.penalty,'money',p,'本报价摘录未给出确定金额；保持未确认，不推定为 0。','unknown');
+    return rows;
+  }
+  function referenceDisplay(v,type){
+    if(v===null||v===undefined)return '— / 未确认';
+    if(type==='money')return esc(refMoney(v));if(type==='pct')return esc(pct(v));
+    if(type==='months')return esc(v)+' 个月';if(type==='years')return esc(v)+' 年';
+    return esc(v);
+  }
+  function renderReference(){
+    const q=REF.banks.find(x=>x.id===state.ui.referenceBank)||REF.banks[0];state.ui.referenceBank=q.id;
+    const live=state.offers.find(o=>o.id===state.ui.referenceOffer)||state.offers[0];state.ui.referenceOffer=live.id;
+    $('reference-bank').value=q.id;
+    $('reference-undo').disabled=referenceUndo===null;
+    $('reference-live').innerHTML=state.offers.map(o=>`<option value="${esc(o.id)}" ${o.id===live.id?'selected':''}>${esc(o.name)}</option>`).join('');
+    const rows=refFieldRows(q,live),r=referenceBenchmark(q),checks=referenceChecks(q);
+    const current=results.find(x=>x.offer.id===live.id),at=current?.valid?current.rows[120]:null;
+    const drift=rows.filter(a=>!['record','unknown'].includes(a.kind)&&(typeof a.wanted==='number'?(!C.finite(a.current)||Math.abs(a.wanted-a.current)>1e-7):a.wanted!==a.current));
+    $('reference-current-status').innerHTML=`<p>${refTag(state.demo?'当前主计算器仍为演示数据':'当前主计算器为工作方案','neutral')} ${refTag(drift.length?drift.length+' 个映射项与参考不同':'映射输入一致',drift.length?'warn':'')} ${live.tranches.length!==1?refTag('多分笔：单笔字段不能直接对照','warn'):''}</p>`+(current?.valid?'':`<div class="ref-flag">当前工作方案未通过原有校验，不展示伪造结果：${esc(current?.errors?.join(' / ')||'缺少结果')}</div>`)+(at?.projected?'<div class="ref-flag">当前方案第 120 期已经包含续贷假设，不能作为同一锁息口径的验算结果。</div>':'');
+    $('reference-overview').innerHTML=`<div class="summarystrip"><strong>共同预算 ${refMoney(812250)}</strong><span>房价 750,000 € + 购房税 48,750 € + Notargebühr 13,500 €</span><span>PDF 第 3 页</span></div><div class="ref-cards">${REF.banks.map(b=>`<article class="ref-card"><div class="eyebrow">PDF / 第 ${b.page} 页</div><h3>${esc(b.name)}</h3><div class="ref-big">${refMoney(b.monthly)} <small class="mini">/ 月</small></div><p>贷款 <strong>${refMoney(b.principal)}</strong> · 实投自有资金 ${refMoney(b.equity)}</p><p>Sollzins ${pct(b.rate)} / Effektivzins ${pct(b.effective)} · 锁息 10 年</p><p>10 年后余债 <strong>${refMoney(b.residual)}</strong></p><p>10 年累计利息 ${refMoney(b.interest)} <span class="ref-note">PDF 第 ${b.sumPage} 页；不含额外还款</span></p></article>`).join('')}</div><div class="ref-flag"><strong>为什么不能照抄两家后就点“统一比较”？</strong>ING 实投自有资金 259,950 €，贷款 552,300 €；Commerzbank 实投 260,000 €，贷款 552,250 €。原引擎对所有方案共用 <code>global.equity</code>，本金与共同需求差额超过 1 € 即不通过校验。本页使用两套独立且忠实原件的输入，不偷改本金，也不放宽校验。</div><p class="mini">ING − Commerzbank（原报价口径）：月供 +14.05 €；120 期付款 +1,686.00 €；利息 +1,461.49 €；期末余债 −174.51 €。本金和实投资金并不相同，因此这不是固定本金条件下的纯利率比较。</p>`;
+    const kinds={source:'PDF 原值',derived:'由原值换算',assumption:'复现设置',record:'仅作记录',unknown:'未确认'};
+    $('reference-mapping').innerHTML=`<table><thead><tr><th>中文 / 德文</th><th>现有输入字段</th><th>${esc(q.name)} 应填 / 应记</th><th>当前 ${esc(live.name)}</th><th>对应关系与说明</th></tr></thead><tbody>${rows.map(a=>{const same=typeof a.wanted==='number'?C.finite(a.current)&&Math.abs(a.wanted-a.current)<1e-7:a.wanted===a.current;return `<tr><td><strong>${esc(a.label)}</strong><span class="ref-note">${esc(a.de)} · PDF p.${a.page}</span></td><td><code>${esc(a.key)}</code></td><td>${referenceDisplay(a.wanted,a.type)}<br>${refTag(kinds[a.kind],a.kind==='assumption'||a.kind==='unknown'?'warn':'neutral')}</td><td>${referenceDisplay(a.current,a.type)}</td><td>${['record','unknown'].includes(a.kind)?refTag('不做相等判定','neutral'):refTag(same?'一致':'不同／未填',same?'':'warn')}<span class="ref-note">${esc(a.note)}</span></td></tr>`;}).join('')}</tbody></table>`;
+    const metrics=[
+      ['贷款本金',q.principal,r.total,current?.valid?current.total:null,q.page],
+      ['首期月供',q.monthly,r.rows[1].regular,current?.valid?current.rows[1].regular:null,q.page],
+      ['首期利息',q.schedule[0].interest,r.rows[1].interest,current?.valid?current.rows[1].interest:null,q.schedulePage],
+      ['首期归还本金',q.schedule[0].principal,r.rows[1].principal,current?.valid?current.rows[1].principal:null,q.schedulePage],
+      ['第 12 期末余债',q.schedule[11].balance,r.rows[12].balance,current?.valid?current.rows[12].balance:null,q.schedulePage],
+      ['第 15 期末余债',q.schedule[14].balance,r.rows[15].balance,current?.valid?current.rows[15].balance:null,q.schedulePage],
+      ['第 120 期末余债',q.residual,r.rows[120].balance,at?.balance,q.page],
+      ['120 期累计常规月供',q.paid,r.rows[120].cumRegular,at?.cumRegular,q.sumPage],
+      ['120 期累计利息',q.interest,r.rows[120].cumInterest,at?.cumInterest,q.sumPage],
+      ['120 期累计归还本金',q.repaid,r.rows[120].cumPrincipal,at?.cumPrincipal,q.sumPage],
+      ['120 期实际额外还款',0,r.rows[120].cumSpecial,at?.cumSpecial,q.schedulePage]
+    ];
+    const passing=checks.filter(x=>x.ok).length,allok=passing===24&&metrics.every(a=>C.round(a[2]-a[1])===0);
+    $('reference-audit').innerHTML=`<p>${refTag(allok?'原始输入重算：全部一致到分':'原始输入重算：存在差异',allok?'':'warn')} ${passing}/24 个原表区间通过（每区间核对 4 个金额），并校验关键汇总。${refTag('第 120 期 = 2036-09-30','neutral')}</p>`;
+    $('reference-results').innerHTML=`<table class="ref-metrics"><thead><tr><th>指标 / PDF 页码</th><th>PDF 报价值</th><th>原始输入重算</th><th>重算 − PDF</th><th>当前方案结果</th><th>当前 − PDF</th></tr></thead><tbody>${metrics.map(a=>`<tr><td>${esc(a[0])}<span class="ref-note">p.${a[4]}</span></td><td class="ref-money">${refMoney(a[1])}</td><td class="ref-money">${refMoney(a[2])}</td><td class="ref-money">${refSigned(a[2]-a[1])}</td><td class="ref-money">${refMoney(a[3])}</td><td class="ref-money">${C.finite(a[3])?refSigned(a[3]-a[1]):'—'}</td></tr>`).join('')}</tbody></table>`;
+    $('reference-checkpoints').innerHTML=`<table><thead><tr><th>日期 / 模拟期数</th><th>区间月供合计<br>PDF / 重算</th><th>区间利息<br>PDF / 重算</th><th>区间归还本金<br>PDF / 重算</th><th>期末余债<br>PDF / 重算</th><th>最大绝对差</th></tr></thead><tbody>${checks.map(a=>`<tr><td>${a.date}<span class="ref-note">${a.startMonth===a.endMonth?'第 '+a.endMonth+' 期':'第 '+a.startMonth+'–'+a.endMonth+' 期'} · p.${a.page}</span></td>${['regular','interest','principal','balance'].map(k=>`<td class="ref-money">${refMoney(a[k])}<br><span class="ref-note">${refMoney(a.actual[k])}</span></td>`).join('')}<td>${refMoney(Math.max(...Object.values(a.deltas).map(Math.abs)))}<br>${refTag(a.ok?'一致到分':'存在差异',a.ok?'':'warn')}</td></tr>`).join('')}</tbody></table>`;
+    $('reference-terms').innerHTML=`<div class="ref-scroll"><table><thead><tr><th>事项</th><th>Commerzbank</th><th>ING</th><th>本页与主计算器怎么处理</th></tr></thead><tbody>
+    <tr><td>额外还款权利</td><td>选定方案 0.00%。同页一般产品文字另述：全额放款满一年后、6 月 30 日、最低 1,000 €。</td><td>日历年原始本金 5%，即 27,615 €；一年内可多次，每次至少 1,000 €。</td><td>原报价复现两家预算均为 0；CB 不因一般文字自动获得额度。主引擎只在第 12、24…期执行，尚不支持上述完整合同日历。</td></tr>
+    <tr><td>资金预备利息</td><td>6 个月免计；第 7 个月起年 3.00%。</td><td>6 个月免计；第 7 个月起年 2.40%。</td><td>月费率分别填 0.25% / 0.20%；只是记录。未建模分批提款、实际未提款余额及计费起算规则。</td></tr>
+    <tr><td>调整 Tilgung</td><td>所引用的方案详情未列明确次数与范围。</td><td>每个锁息期最多 2 次免费；范围 1.25%–10%；更多次数另外收费。</td><td>保存在条款说明，不自动排程改变月供。</td></tr>
+    <tr><td>未提取部分贷款</td><td>所引用的方案详情未列相应额度与费率。</td><td>总融资范围内最多 25,000 € 可不提取，费用为不提取金额的 1%，且须满足最低贷款金额。</td><td>只记录，不从贷款本金直接减掉 25,000 €，不把 1% 计入必然费用。</td></tr>
+    <tr><td>日期与年度汇总</td><td colspan="2">放款 2026-09-30；首期 2026-10-31；第 120 期 2036-09-30。</td><td>模拟第 1 年 = 2026-10 至 2027-09。PDF 的 2028 全年 = 第 16–27 期；2036 锁息期内 = 第 112–120 期。</td></tr>
+    <tr><td>10 年与约 28 年</td><td colspan="2">10 年锁息；约 28 年为示例计算的总期限。</td><td>不能在固定 10 年处要求余债为 0。第 121 期开始，主引擎按用户的续贷情境重设利率和月供，故不与 PDF 后续示例强行相等。</td></tr>
+    </tbody></table></div><p class="ref-source">条款来源：PDF 第 5、12 页；日期及年度区间：第 8、15 页。0.25%、0.20% 和 27,615 € 是根据原件数值换算，不是新增银行承诺。</p>`;
+    $('reference-longterm').innerHTML=`<div class="ref-scroll"><table><thead><tr><th>仅记录的长期示例</th><th>示例最后还款日</th><th>示例累计付款</th><th>示例累计利息</th><th>来源</th></tr></thead><tbody>${REF.banks.map(b=>`<tr><td>${esc(b.name)}</td><td>${b.finalDate}</td><td>${refMoney(b.fullPaid)}</td><td>${refMoney(b.fullInterest)}</td><td>PDF p.${b.sumPage}</td></tr>`).join('')}</tbody></table></div><p class="ref-source">PDF 第 10、17 页也注明该还款路径只是示例，放款、特别还款或还款率变化会改变结果。本地验算范围严格截止第 120 期。</p>`;
+  }
+  $('reference-bank').addEventListener('change',event=>{state.ui.referenceBank=event.target.value;renderReference();persist();});
+  $('reference-live').addEventListener('change',event=>{state.ui.referenceOffer=event.target.value;renderReference();persist();});
+  $('reference-load').addEventListener('click',()=>{
+    const q=REF.banks.find(x=>x.id===state.ui.referenceBank)||REF.banks[0];
+    if(!confirm('载入 '+q.name+' 原始报价？\n将先下载当前完整方案 JSON 备份，然后替换购房参数及全部贷款方案，只保留本银行。\n卖房／租房／持有成本／续贷参数仍保留当前设置，不是 PDF 数据；开启浏览器记忆时，本地缓存也会更新。\n请确认备份已允许下载后继续。'))return;
+    flush();referenceUndo=C.clone(state);download(JSON.stringify(state,null,2),'application/json;charset=utf-8','房贷方案_载入参考前备份_'+stamp()+'.json');
+    state=referenceNextState(q);snapshot=false;rebuild();toast('已请求下载旧方案备份，并载入 '+q.name+'。请核对下载是否成功；未提供的情境参数仍为原设置。');
+  });
+  $('reference-undo').addEventListener('click',()=>{
+    if(!referenceUndo||!confirm('恢复本次载入之前的方案？载入之后的新修改将被替换。'))return;
+    state=C.normalize(referenceUndo);referenceUndo=null;snapshot=false;state.ui.tab='reference';rebuild();toast('已恢复载入之前的工作方案。');
+  });
+  $('reference-export').addEventListener('click',()=>{
+    const q=REF.banks.find(x=>x.id===state.ui.referenceBank)||REF.banks[0];
+    download(JSON.stringify(referenceNextState(q),null,2),'application/json;charset=utf-8','参考报价_'+q.id+'_2026-09-01.json');
+    toast('已导出单家报价的兼容 JSON，不改当前方案；非报价的续贷、卖房等情境保留当前设置。');
+  });
+  $('reference-export-csv').addEventListener('click',()=>{
+    const q=REF.banks.find(x=>x.id===state.ui.referenceBank)||REF.banks[0];
+    const out=[['参考报价',q.name],['来源日期','2026-09-01'],['性质','非有效性确认；仅第1至120期复现，无额外还款'],[],['日期','起始期','结束期','指标','PDF原值EUR','现有引擎重算EUR','重算减原值EUR','PDF页码']];
+    referenceChecks(q).forEach(a=>['regular','interest','principal','balance'].forEach(k=>out.push([a.date,a.startMonth,a.endMonth,k,a[k].toFixed(2),a.actual[k].toFixed(2),a.deltas[k].toFixed(2),a.page])));
+    download(csv(out),'text/csv;charset=utf-8','报价逐行验算_'+q.id+'.csv');
+  });
+  app.querySelector('[role="tablist"]').addEventListener('keydown',event=>{
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    const tabs=[...app.querySelectorAll('[role="tablist"] [role="tab"]')],i=tabs.indexOf(document.activeElement);if(i<0)return;
+    event.preventDefault();const j=event.key==='Home'?0:event.key==='End'?tabs.length-1:(i+(event.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;
+    tabs[j].focus();setTab(tabs[j].dataset.tab);
+  });
+
+  function rebuild(){buildGlobalFields();buildOfferEditors();renderBanner();recalc();setTab(state.ui.tab);}
+  function queue(){clearTimeout(debounce);debounce=setTimeout(recalc,140);}
+  function flush(){clearTimeout(debounce);recalc();}
+  function newBlank(){if(!confirm('建立空白方案会替换当前页面数据。尚未导出的更改将丢失。继续？'))return;state=C.blank();snapshot=false;rebuild();toast('已建立空白基准。请先填写共同购房假设，再录入贷款。');}
+  function uid(prefix){return prefix+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+  function action(type,id,tid){
+    const o=state.offers.find(o=>o.id===id);
+    if(type==='blank'){newBlank();return;}
+    if(type==='confirm-data'){if(confirm('确认你已逐项替换并核对示例参数？这只移除演示标签，不代表银行核验。')){state.demo=false;renderBanner();persist();}return;}
+    if(!o)return;
+    if(type==='benchmark'){state.offers=[o,...state.offers.filter(x=>x!==o)];}
+    if(type==='duplicate'){if(state.offers.length>=8)return;const n=C.clone(o);n.id=uid('O');n.name=o.name+' · 副本';n.tranches.forEach(t=>t.id=uid('T'));state.offers.push(n);}
+    if(type==='delete-offer'){if(state.offers.length<=1||!confirm('删除方案“'+o.name+'”？'))return;state.offers=state.offers.filter(x=>x!==o);}
+    if(type==='add-tranche'){if(o.tranches.length>=6)return;const t=C.tranche(uid('T'),0,3.5,10);t.name='新增分笔';t.amount=null;t.rate=null;o.tranches.push(t);}
+    if(type==='delete-tranche'){if(o.tranches.length<=1||!confirm('删除这笔贷款？删除后需重新核对贷款合计。'))return;o.tranches=o.tranches.filter(t=>t.id!==tid);}
+    if(type==='match-need'){const need=C.loanNeed(state.global);if(!C.finite(need)||need<=0){toast('先填写有效的共同购房假设。');return;}o.tranches[0].amount=need;}
+    buildOfferEditors();recalc();
+  }
+  app.addEventListener('input',event=>{
+    const el=event.target;
+    if(el.id==='chart-year'){state.ui.chartYear=Math.max(0,Math.min(chartEnd(),Number(el.value)||0));drawChart();persist();return;}
+    if(el.id==='horizon'){if(el.value!==''&&el.validity.valid){state.ui.horizon=Math.max(1,Math.min(40,Number(el.value)));queue();}return;}
+    if(!el.dataset.g && !el.dataset.key)return;
+    let obj=state.global,k=el.dataset.g;
+    if(!k){obj=state.offers.find(o=>o.id===el.dataset.offer);if(!obj)return;k=el.dataset.key;if(el.dataset.tranche)obj=obj.tranches.find(t=>t.id===el.dataset.tranche);}
+    if(!obj)return;
+    obj[k]=el.type==='number'?(el.value.trim()===''||!Number.isFinite(el.valueAsNumber)?null:el.valueAsNumber):el.value;
+    queue();
+  });
+  app.addEventListener('change',event=>{
+    const el=event.target;
+    if(el.id==='sale-offer'){state.ui.saleOffer=el.value;recalc();}
+    if(el.id==='schedule-offer'){state.ui.scheduleOffer=el.value;renderSchedule();persist();}
+    if(el.id==='remember'){
+      remember=el.checked;if(!remember){try{localStorage.removeItem(KEY);}catch(e){}toast('已关闭浏览器记忆并尝试删除本地缓存；导出的文件不受影响。');}persist();
+    }
+  });
+  app.addEventListener('click',event=>{
+    const target=event.target.closest('button');if(!target)return;
+    if(target.dataset.tab){setTab(target.dataset.tab);return;}
+    if(target.dataset.horizon){state.ui.horizon=Number(target.dataset.horizon);recalc();return;}
+    if(target.dataset.action)action(target.dataset.action,target.dataset.id,target.dataset.tid);
+  });
+  app.addEventListener('submit',event=>event.preventDefault());
+  $('new-blank').addEventListener('click',newBlank);
+  $('restore-demo').addEventListener('click',()=>{if(confirm('用演示数据替换当前方案？请先导出需要保留的数据。')){state=C.defaults();snapshot=false;rebuild();toast('已恢复演示数据。');}});
+  $('add-offer').addEventListener('click',()=>{
+    if(state.offers.length>=8)return;
+    const id=uid('O'),o=C.offer(id,'新 Angebot '+(state.offers.length+1),3.5,10);
+    o.tranches[0].amount=C.loanNeed(state.global);o.tranches[0].rate=null;o.tranches[0].tilgung=null;o.tranches[0].fixedYears=null;o.tranches[0].monthly=null;
+    o.freeMonths=0;o.commitmentRate=0;state.offers.push(o);buildOfferEditors();recalc();
+    $('offer-summary-'+id)?.scrollIntoView({behavior:'auto',block:'center'});
+  });
+  function download(contents,mime,name){
+    const blob=new Blob([contents],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+  }
+  const stamp=()=>new Date().toISOString().slice(0,10);
+  $('export-json').addEventListener('click',()=>{flush();download(JSON.stringify(state,null,2),'application/json;charset=utf-8','房贷方案_'+stamp()+'.json');toast('已导出方案 JSON。可在任何本工具副本中重新导入。');});
+  $('import-json').addEventListener('click',()=>$('file-input').click());
+  $('file-input').addEventListener('change',async event=>{
+    const file=event.target.files?.[0];if(!file)return;
+    try{if(file.size>2000000)throw new Error('文件超过 2 MB，已拒绝导入。');const next=C.normalize(JSON.parse(await file.text()));
+      if(!confirm('导入将替换当前页面方案，是否继续？'))return;state=next;snapshot=false;rebuild();toast('方案已导入，请核对金额、费率及演示标签。');
+    }catch(e){toast('导入失败：'+e.message);}finally{event.target.value='';}
+  });
+  $('export-html').addEventListener('click',()=>{
+    flush();const copy=document.documentElement.cloneNode(true);
+    const data=JSON.stringify({embeddedSnapshot:true,state}).replace(/</g,'\\u003c').replace(/>/g,'\\u003e').replace(/&/g,'\\u0026').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
+    copy.querySelector('#embedded-state').textContent=data;
+    copy.querySelector('#toast').classList.add('hidden');copy.querySelector('#remember').removeAttribute('checked');
+    download('<!DOCTYPE html>\n'+copy.outerHTML,'text/html;charset=utf-8','房贷比较器_带数据_'+stamp()+'.html');
+    toast('已保存带当前数据的独立 HTML。打开新文件会优先读取文件内快照。');
+  });
+  function cell(value){let s=String(value??'');if(/^\s*[=+@\-]/.test(s)&&!Number.isFinite(Number(s)))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
+  function csv(rows){return '\uFEFF'+rows.map(r=>r.map(cell).join(';')).join('\r\n');}
+  $('export-csv').addEventListener('click',()=>{
+    flush();const r=results.find(r=>r.offer.id===state.ui.scheduleOffer);if(!r?.valid)return;
+    const data=[['方案',r.offer.name],['数据性质',state.demo?'演示数据，非真实报价':'用户手工输入'],['币种','EUR'],['月供模式',state.global.compareMode],['一次性费用含预备利息',r.fees],['续贷假设年利率%',state.global.refiRate],['续贷还清年限',state.global.refiYears],[],['月份','月供','其中月利息','额外还款','本月偿还本金','月末余债','累计利息','累计常规月供','累计额外还款','累计融资成本','阶段']];
+    scheduleFor(r).forEach(a=>data.push([a.month,a.regular,a.interest,a.special,a.principal,a.balance,a.cumInterest,a.cumRegular,a.cumSpecial,a.cost,a.projected?'含续贷假设':'原锁息／已还清']));
+    data.push([],['以下按贷款分笔列示'],['分笔','月份','名义年利率%','月供','月利息','额外还款','月末余债','累计利息']);
+    r.parts.forEach(p=>{const terminal=p.rows.find(a=>a.month>0&&a.balance===0)?.month||480;for(let m=1;m<=terminal;m++){const a=p.rows[m];data.push([p.t.name,m,m>p.fixed?state.global.refiRate:p.t.rate,a.regular,a.interest,a.special,a.balance,a.cumInterest]);}});
+    download(csv(data),'text/csv;charset=utf-8','还款明细_'+stamp()+'.csv');
+  });
+  $('export-summary').addEventListener('click',()=>{
+    flush();const n=Math.round(state.ui.horizon*12),data=[['数据性质',state.demo?'演示数据，非真实报价':'用户手工输入'],['比较年份',state.ui.horizon],['统一月供模式',state.global.compareMode],[],['方案','参数状态','贷款金额','首月月供','累计月供与额外还款','累计利息','融资费用含预备利息','融资成本','累计还本金','剩余本金','含续贷假设']];
+    results.forEach(r=>{if(!r.valid)data.push([r.offer.name,r.errors.join(' / ')]);else{const a=r.rows[n];data.push([r.offer.name,'有效',r.total,r.initialMonthly,a.cumRegular+a.cumSpecial,a.cumInterest,r.fees,a.cost,a.cumPrincipal,a.balance,a.projected?'是':'否']);}});
+    download(csv(data),'text/csv;charset=utf-8','贷款报价比较_'+stamp()+'.csv');
+  });
+  $('print').addEventListener('click',()=>{flush();window.print();});
+  let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(drawChart,100);});
+  window.addEventListener('beforeprint',()=>{flush();});
+  window.__mortgageDebug={getState:()=>C.clone(state),getResults:()=>results,flush};
+  window.__mortgageReferenceDebug={getData:()=>C.clone(REF),audit:()=>REF.banks.map(q=>({bank:q.id,checks:referenceChecks(q),result:referenceBenchmark(q)}))};
+  rebuild();if(startupMessage)toast(startupMessage);
+})();
+
+</script>
+</body>
+</html>

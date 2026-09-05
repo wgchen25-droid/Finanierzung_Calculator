@@ -1,0 +1,15 @@
+{
+  "name": "finanzierung-calculator",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check:build": "node scripts/build.mjs --check",
+    "test": "node tests/reference-regression.cjs",
+    "test:browser": "node tests/reference-browser.cjs",
+    "test:all": "npm run check:build && npm test && npm run test:browser"
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}
